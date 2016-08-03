@@ -1,0 +1,25 @@
+{
+  "name": "ntils",
+  "version": "1.0.1",
+  "description": "一个 Node & Browser 工具函数集",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Houfeng/ntils.git"
+  },
+  "keywords": [
+    "utils",
+    "util",
+    "lodash",
+    "ntils"
+  ],
+  "author": "Houfeng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Houfeng/ntils/issues"
+  },
+  "homepage": "https://github.com/Houfeng/ntils#readme"
+}
