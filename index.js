@@ -420,6 +420,21 @@
   };
 
   /**
+   * 数组去重
+   **/
+  owner.unique = function (array) {
+    if (this.isNull(array)) return array;
+    var newArray = [];
+    var map = {};
+    this.each(array, function (i, value) {
+      if (map[value]) return;
+      map[value] = true;
+      newArray.push(value);
+    });
+    return newArray;
+  };
+
+  /**
    * 解析 function 的参数列表
    **/
   owner.getFunctionArgumentNames = function (fn) {
