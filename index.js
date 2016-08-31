@@ -412,11 +412,43 @@
    * 对象变换
    **/
   owner.map = function (list, fn) {
-    var buffer = [];
+    var buffer = this.isArray(list) ? [] : {};
     this.each(list, function (name, value) {
-      buffer.push(fn(name, value));
+      buffer[name](fn(name, value));
     });
-    return [];
+    return buffer;
+  };
+
+  /**
+   * 通过路径设置属性值
+   */
+  owner.setByPath = function (obj, path, value) {
+    if (this.isNull(obj) || this.isNull(path) || path === '') {
+      return;
+    }
+    if (!this.isArray(path)) path = path.split('.');
+    path.forEach((name, index) => {
+      if (index === path.length - 1) {
+        obj[name] = value;
+      } else {
+        obj[name] = obj[name] || {};
+        obj = obj[name];
+      }
+    });
+  };
+
+  /**
+   * 通过路径获取属性值
+   */
+  owner.getByPath = function (obj, path) {
+    if (this.isNull(obj) || this.isNull(path) || path === '') {
+      return obj;
+    }
+    if (!this.isArray(path)) path = path.split('.');
+    path.forEach(name => {
+      if (!this.isNull(obj)) obj = obj[name];
+    });
+    return obj;
   };
 
   /**
