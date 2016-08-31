@@ -261,17 +261,17 @@
    * @return {void}                   无返回值
    * @static
    */
-  owner.each = function (list, handler) {
+  owner.each = function (list, handler, scope) {
     if (this.isNull(list) || this.isNull(handler)) return;
     if (this.isArray(list)) {
       var listLength = list.length;
       for (var i = 0; i < listLength; i++) {
-        var rs = handler.call(list[i], i, list[i]);
+        var rs = handler.call(scope || list[i], i, list[i]);
         if (!this.isNull(rs)) return rs;
       }
     } else {
       for (var key in list) {
-        var rs = handler.call(list[key], key, list[key]);
+        var rs = handler.call(scope || list[key], key, list[key]);
         if (!this.isNull(rs)) return rs;
       }
     }
@@ -427,14 +427,14 @@
       return;
     }
     if (!this.isArray(path)) path = path.split('.');
-    path.forEach((name, index) => {
+    this.each(path, function (index, name) {
       if (index === path.length - 1) {
         obj[name] = value;
       } else {
         obj[name] = obj[name] || {};
         obj = obj[name];
       }
-    });
+    }, this);
   };
 
   /**
@@ -445,9 +445,9 @@
       return obj;
     }
     if (!this.isArray(path)) path = path.split('.');
-    path.forEach(name => {
+    this.each(path, function (index, name) {
       if (!this.isNull(obj)) obj = obj[name];
-    });
+    }, this);
     return obj;
   };
 
