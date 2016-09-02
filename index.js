@@ -414,7 +414,7 @@
   owner.map = function (list, fn) {
     var buffer = this.isArray(list) ? [] : {};
     this.each(list, function (name, value) {
-      buffer[name](fn(name, value));
+      buffer[name] = fn(name, value);
     });
     return buffer;
   };
