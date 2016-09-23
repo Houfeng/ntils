@@ -334,8 +334,10 @@
         }
       }
     }
-    objClone.toString = obj.toString;
-    objClone.valueOf = obj.valueOf;
+    this.each(['toString', 'valueOf'], function (i, name) {
+      if (this.contains(igonreArray, key)) return;
+      objClone[name] = obj[name];
+    }, this);
     return objClone;
   };
 
@@ -354,6 +356,24 @@
       } catch (ex) { }
     })
     return obj2;
+  };
+
+  /**
+   * 从一个数值循环到别一个数
+   * @param {number} fromNum 开始数值
+   * @param {Number} toNum 结束数值
+   * @param {Number} step 步长值
+   * @param {function} handler 执行函数
+   * @returns {void} 无返回
+   */
+  owner.fromTo = function (fromNum, toNum, step, handler) {
+    if (!handler) handler = [step, step = handler][0];
+    step = Math.abs(step || 1);
+    if (fromNum < toNum) {
+      for (var i = fromNum; i <= toNum; i += step) handler(i);
+    } else {
+      for (var i = fromNum; i >= toNum; i -= step) handler(i);
+    }
   };
 
   /**
