@@ -446,8 +446,11 @@
     if (this.isNull(obj) || this.isNull(path) || path === '') {
       return;
     }
-    if (!this.isArray(path)) path = path.split('.');
+    if (!this.isArray(path)) {
+      path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
+    }
     this.each(path, function (index, name) {
+      if (this.isNull(name) || name.length < 1) return;
       if (index === path.length - 1) {
         obj[name] = value;
       } else {
@@ -464,8 +467,11 @@
     if (this.isNull(obj) || this.isNull(path) || path === '') {
       return obj;
     }
-    if (!this.isArray(path)) path = path.split('.');
+    if (!this.isArray(path)) {
+      path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
+    }
     this.each(path, function (index, name) {
+      if (this.isNull(name) || name.length < 1) return;
       if (!this.isNull(obj)) obj = obj[name];
     }, this);
     return obj;
@@ -527,21 +533,6 @@
     var time = (new Date()).getTime() + s;
     while ((new Date()).getTime() + 1 < time);
     return;
-  };
-
-  /**
-   * 异步执行一个函数（模拟多线程）
-   * @method async
-   * @param {Function} fn 执行的函数
-   * @param {Number} dely 延迟时间（毫秒）
-   * @static
-   */
-  owner.async = function (fn, delay) {
-    if (!this.isFunction(fn)) return;
-    delay = delay || 0;
-    if (fn.asyncTimer) clearTimeout(fn.asyncTimer);
-    fn.asyncTimer = setTimeout(fn, delay);
-    return fn.asyncTimer;
   };
 
   /**
