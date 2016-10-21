@@ -630,7 +630,7 @@
    * @param {string} str 字符串
    * @returns {HTMLNode} 解析后的 DOM 
    */
-  utils.parseDom = function (str) {
+  owner.parseDom = function (str) {
     this._PARSER_DOM_DIV = this._PARSER_DOM_DIV || document.createElement('dev');
     this._PARSER_DOM_DIV.innerHTML = str;
     var domNodes = this.toArray(this._PARSER_DOM_DIV.childNodes);
