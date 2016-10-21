@@ -302,9 +302,11 @@
     }
     for (var key in placeholder) {
       if (new RegExp("(" + key + ")").test(format)) {
-        format = format.replace(RegExp.$1,
-          RegExp.$1.length == 1 ? placeholder[key] :
-            ("00" + placeholder[key]).substr(("" + placeholder[key]).length));
+        format = format.replace(
+          RegExp.$1,
+          RegExp.$1.length == 1 ?
+            placeholder[key] : ("00" + placeholder[key]).substr(("" + placeholder[key]).length)
+        );
       }
     }
     return format;
@@ -359,6 +361,58 @@
   };
 
   /**
+   * 定义不可遍历的属性
+   **/
+  owner.defineFreezeProp = function (obj, name, value) {
+    Object.defineProperty(obj, name, {
+      value: value,
+      enumerable: false,
+      configurable: true, //能不能重写定义
+      writable: false //能不能用「赋值」运算更改
+    });
+  };
+
+  /**
+   * 获取所有 key 
+   */
+  owner.keys = function (obj) {
+    if (Object.keys) return Object.keys(obj);
+    var keys = [];
+    this.each(obj, function (key) {
+      keys.push(key);
+    });
+    return keys;
+  };
+
+  /**
+   * 创建一个对象
+   */
+  owner.create = function (proto) {
+    if (Object.create) return Object.create(proto);
+    return { __proto__: proto };
+  };
+
+  /**
+   * 是否深度相等
+   */
+  owner.deepEqual = function (a, b) {
+    if (a === b) return true;
+    if (!this.isObject(a) || !this.isObject(b)) return false;
+    var aKeys = this.keys(a);
+    var bKeys = this.keys(b);
+    if (aKeys.length !== bKeys.length) return false;
+    var allKeys = aKeys.concat(bKeys);
+    var checkedMap = this.create(null);
+    var result = true;
+    this.each(allKeys, function (i, key) {
+      if (checkedMap[key]) return;
+      if (!this.deepEqual(a[key], b[key])) result = false;
+      checkedMap[key] = true;
+    }, this);
+    return result;
+  };
+
+  /**
    * 从一个数值循环到别一个数
    * @param {number} fromNum 开始数值
    * @param {Number} toNum 结束数值
@@ -387,45 +441,6 @@
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
-  };
-
-  /**
-   * 定义属性
-   * @method defineProperty
-   * @param {Object} obj 对象
-   * @param {String} name 属性名
-   * @param {Object} context 属性定义
-   * @param {Boolean} compatible 是否使用兼容方式
-   * @static
-   */
-  owner.defineProperty = function (obj, name, context, compatible) {
-    if (!obj || !name || !context) return;
-    var self = this;
-    context.set = context.set || function () {
-      throw 'do not implement ' + name + ' setter.';
-    };
-    context.get = context.get || function () {
-      throw 'do not implement ' + name + ' getter.';
-    };
-    //--
-    if (!compatible) {
-      if (obj.__defineGetter__ && obj.__defineSetter__) {
-        obj.__defineSetter__(name, context.set);
-        obj.__defineGetter__(name, context.get);
-      } else if (Object.defineProperty) {
-        try {
-          Object.defineProperty(obj, name, context);
-        } catch (ex) { }
-      }
-    }
-    //--
-    if (!self.has(obj, name)) {
-      obj[name] = function (value) {
-        var method = self.isNull(value) ? 'get' : 'set';
-        return context[method].apply(obj, arguments || []);
-      };
-    }
-    return obj[name];
   };
 
   /**
@@ -609,18 +624,9 @@
    * 首字母大写
    */
   owner.firstUpper = function (str) {
-    var self = this;
-    if (self.isNull(str)) return;
-    str = str.toLowerCase();
-    var buffer = [];
-    for (var i in str) {
-      if (i == 0) {
-        buffer.push(str[i].toUpperCase());
-      } else {
-        buffer.push(str[i]);
-      }
-    };
-    return buffer.join('');
+    if (this.isNull(str)) return;
+    str[0] = str[0].toLowerCase();
+    return str;
   };
 
   //----
