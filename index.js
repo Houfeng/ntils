@@ -4,7 +4,7 @@
   /**
    * 空函数
    */
-  utils.noop = function () { };
+  owner.noop = function () { };
 
   /**
    * 验证一个对象是否为NULL
