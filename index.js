@@ -2,6 +2,11 @@
   "use strict";
 
   /**
+   * 空函数
+   */
+  utils.noop = function () { };
+
+  /**
    * 验证一个对象是否为NULL
    * @method isNull
    * @param  {Object}  obj 要验证的对象
@@ -216,22 +221,13 @@
   /**
    * 转换为数组
    * @method toArray
-   * @param {Array|Object} _aar 伪数组
+   * @param {Array|Object} array 伪数组
    * @return {Array} 转换结果数组
    * @static
    */
-  owner.toArray = function (_aar) {
-    if (this.isNull(_aar)) return [];
-    try {
-      return Array.prototype.slice.call(_aar);
-    } catch (e) {
-      var arr = [];
-      var lan = _aar.length;
-      for (var i = 0; i < len; i++) {
-        arr[i] = s[i];
-      }
-      return arr;
-    }
+  owner.toArray = function (array) {
+    if (this.isNull(array)) return [];
+    return Array.prototype.slice.call(array);
   };
 
   /**
@@ -627,6 +623,19 @@
     if (this.isNull(str)) return;
     str[0] = str[0].toLowerCase();
     return str;
+  };
+
+  /**
+   * 解析字符串为 dom 
+   * @param {string} str 字符串
+   * @returns {HTMLNode} 解析后的 DOM 
+   */
+  utils.parseDom = function (str) {
+    this._PARSER_DOM_DIV = this._PARSER_DOM_DIV || document.createElement('dev');
+    this._PARSER_DOM_DIV.innerHTML = str;
+    var domNodes = this.toArray(this._PARSER_DOM_DIV.childNodes);
+    this._PARSER_DOM_DIV.innerHTML = '';
+    return domNodes;
   };
 
   //----

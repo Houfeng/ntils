@@ -1,0 +1,138 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/Houfeng/.nvm/versions/node/v4.2.2/bin/node',
+1 verbose cli   '/Users/Houfeng/.nvm/versions/node/v4.2.2/bin/npm',
+1 verbose cli   'pu' ]
+2 info using npm@3.10.6
+3 info using node@v4.2.2
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   escapedName: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/Houfeng/Dev/MyProjects/ntils',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/Houfeng/.npm/ntils/1.0.8/package.tgz not in flight; packing
+9 verbose correctMkdir /Users/Houfeng/.npm correctMkdir not in flight; initializing
+10 info lifecycle ntils@1.0.8~prepublish: ntils@1.0.8
+11 silly lifecycle ntils@1.0.8~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/Users/Houfeng/.npm/ntils/1.0.8/package.tgz',
+12 verbose tar pack   '/Users/Houfeng/Dev/MyProjects/ntils' ]
+13 verbose tarball /Users/Houfeng/.npm/ntils/1.0.8/package.tgz
+14 verbose folder /Users/Houfeng/Dev/MyProjects/ntils
+15 verbose addLocalTarball adding from inside cache /Users/Houfeng/.npm/ntils/1.0.8/package.tgz
+16 verbose correctMkdir /Users/Houfeng/.npm correctMkdir not in flight; initializing
+17 silly cache afterAdd ntils@1.0.8
+18 verbose afterAdd /Users/Houfeng/.npm/ntils/1.0.8/package/package.json not in flight; writing
+19 verbose correctMkdir /Users/Houfeng/.npm correctMkdir not in flight; initializing
+20 verbose afterAdd /Users/Houfeng/.npm/ntils/1.0.8/package/package.json written
+21 silly publish { name: 'ntils',
+21 silly publish   version: '1.0.8',
+21 silly publish   description: '一个 Node & Browser 工具函数集',
+21 silly publish   main: 'index.js',
+21 silly publish   scripts: { test: 'mocha' },
+21 silly publish   repository: { type: 'git', url: 'git+https://github.com/Houfeng/ntils.git' },
+21 silly publish   keywords: [ 'utils', 'util', 'lodash', 'ntils' ],
+21 silly publish   author: { name: 'Houfeng' },
+21 silly publish   license: 'MIT',
+21 silly publish   bugs: { url: 'https://github.com/Houfeng/ntils/issues' },
+21 silly publish   homepage: 'https://github.com/Houfeng/ntils#readme',
+21 silly publish   readme: '一个 Node & Browser 工具函数集',
+21 silly publish   readmeFilename: 'README.md',
+21 silly publish   gitHead: '3ea6d9657023ac89b68a1984ec7e841a02c3ba89',
+21 silly publish   _id: 'ntils@1.0.8',
+21 silly publish   _shasum: '4825a434744a1667ec7f401c719e0bd1f3999e79',
+21 silly publish   _from: '.' }
+22 verbose getPublishConfig undefined
+23 silly mapToRegistry name ntils
+24 silly mapToRegistry using default registry
+25 silly mapToRegistry registry http://registry.npmjs.org/
+26 silly mapToRegistry data Result {
+26 silly mapToRegistry   raw: 'ntils',
+26 silly mapToRegistry   scope: null,
+26 silly mapToRegistry   escapedName: 'ntils',
+26 silly mapToRegistry   name: 'ntils',
+26 silly mapToRegistry   rawSpec: '',
+26 silly mapToRegistry   spec: 'latest',
+26 silly mapToRegistry   type: 'tag' }
+27 silly mapToRegistry uri http://registry.npmjs.org/ntils
+28 verbose publish registryBase http://registry.npmjs.org/
+29 silly publish uploading /Users/Houfeng/.npm/ntils/1.0.8/package.tgz
+30 verbose request uri http://registry.npmjs.org/ntils
+31 verbose request sending authorization for write operation
+32 info attempt registry request try #1 at 1:22:30 AM
+33 verbose request using bearer token for auth
+34 verbose request id bb66d5a602dbbfe7
+35 http request PUT http://registry.npmjs.org/ntils
+36 http 500 http://registry.npmjs.org/ntils
+37 verbose headers { 'content-type': 'application/json',
+37 verbose headers   'cache-control': 'max-age=0',
+37 verbose headers   'content-length': '41',
+37 verbose headers   'accept-ranges': 'bytes',
+37 verbose headers   date: 'Fri, 21 Oct 2016 17:23:00 GMT',
+37 verbose headers   via: '1.1 varnish',
+37 verbose headers   connection: 'keep-alive',
+37 verbose headers   'x-served-by': 'cache-sea1926-SEA',
+37 verbose headers   'x-cache': 'MISS',
+37 verbose headers   'x-cache-hits': '0',
+37 verbose headers   'x-timer': 'S1477070549.910562,VS0,VE30201' }
+38 info retry will retry, error on last attempt: Error: Authorization service failure : ntils
+39 info attempt registry request try #2 at 1:23:11 AM
+40 verbose request using bearer token for auth
+41 http request PUT http://registry.npmjs.org/ntils
+42 http 500 http://registry.npmjs.org/ntils
+43 verbose headers { 'content-type': 'application/json',
+43 verbose headers   'cache-control': 'max-age=0',
+43 verbose headers   'content-length': '41',
+43 verbose headers   'accept-ranges': 'bytes',
+43 verbose headers   date: 'Fri, 21 Oct 2016 17:23:40 GMT',
+43 verbose headers   via: '1.1 varnish',
+43 verbose headers   connection: 'keep-alive',
+43 verbose headers   'x-served-by': 'cache-sea1926-SEA',
+43 verbose headers   'x-cache': 'MISS',
+43 verbose headers   'x-cache-hits': '0',
+43 verbose headers   'x-timer': 'S1477070590.319916,VS0,VE30034' }
+44 info retry will retry, error on last attempt: Error: Authorization service failure : ntils
+45 info attempt registry request try #3 at 1:24:41 AM
+46 verbose request using bearer token for auth
+47 http request PUT http://registry.npmjs.org/ntils
+48 http 500 http://registry.npmjs.org/ntils
+49 verbose headers { 'content-type': 'application/json',
+49 verbose headers   'cache-control': 'max-age=0',
+49 verbose headers   'content-length': '41',
+49 verbose headers   'accept-ranges': 'bytes',
+49 verbose headers   date: 'Fri, 21 Oct 2016 17:25:10 GMT',
+49 verbose headers   via: '1.1 varnish',
+49 verbose headers   connection: 'keep-alive',
+49 verbose headers   'x-served-by': 'cache-sea1926-SEA',
+49 verbose headers   'x-cache': 'MISS',
+49 verbose headers   'x-cache-hits': '0',
+49 verbose headers   'x-timer': 'S1477070680.802665,VS0,VE30036' }
+50 verbose request invalidating /Users/Houfeng/.npm/registry.npmjs.org/ntils on PUT
+51 error publish Failed PUT 500
+52 verbose stack Error: Authorization service failure : ntils
+52 verbose stack     at makeError (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+52 verbose stack     at CachingRegistryClient.<anonymous> (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+52 verbose stack     at Request._callback (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+52 verbose stack     at Request.self.callback (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/request/request.js:200:22)
+52 verbose stack     at emitTwo (events.js:87:13)
+52 verbose stack     at Request.emit (events.js:172:7)
+52 verbose stack     at Request.<anonymous> (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/request/request.js:1067:10)
+52 verbose stack     at emitOne (events.js:82:20)
+52 verbose stack     at Request.emit (events.js:169:7)
+52 verbose stack     at IncomingMessage.<anonymous> (/Users/Houfeng/.nvm/versions/node/v4.2.2/lib/node_modules/npm/node_modules/request/request.js:988:12)
+53 verbose statusCode 500
+54 verbose pkgid ntils
+55 verbose cwd /Users/Houfeng/Dev/MyProjects/ntils
+56 error Darwin 15.6.0
+57 error argv "/Users/Houfeng/.nvm/versions/node/v4.2.2/bin/node" "/Users/Houfeng/.nvm/versions/node/v4.2.2/bin/npm" "pu"
+58 error node v4.2.2
+59 error npm  v3.10.6
+60 error code E500
+61 error Authorization service failure : ntils
+62 error If you need help, you may report this error at:
+62 error     <https://github.com/npm/npm/issues>
+63 verbose exit [ 1, true ]
