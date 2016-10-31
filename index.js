@@ -278,18 +278,21 @@
    * @method formatDate
    * @param {Date|String|Number} date 日期
    * @param {String} format 格式化字符串
+   * @param {object} dict 反译字典
    * @return {String} 格式化结果
    * @static
    */
-  owner.formatDate = function (date, format) {
+  owner.formatDate = function (date, format, dict) {
     if (this.isNull(format) || this.isNull(date)) return date;
     date = this.toDate(date);
+    dict = dict || {};
     var placeholder = {
       "M+": date.getMonth() + 1, //month
       "d+": date.getDate(), //day
       "h+": date.getHours(), //hour
       "m+": date.getMinutes(), //minute
       "s+": date.getSeconds(), //second
+      "w+": date.getDay(), //week
       "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
       "S": date.getMilliseconds() //millisecond
     }
@@ -298,11 +301,10 @@
     }
     for (var key in placeholder) {
       if (new RegExp("(" + key + ")").test(format)) {
-        format = format.replace(
-          RegExp.$1,
-          RegExp.$1.length == 1 ?
-            placeholder[key] : ("00" + placeholder[key]).substr(("" + placeholder[key]).length)
-        );
+        var value = placeholder[key];
+        value = dict[value] || value;
+        format = format.replace(RegExp.$1, RegExp.$1.length == 1
+          ? value : ("00" + value).substr(("" + value).length));
       }
     }
     return format;
