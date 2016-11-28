@@ -70,13 +70,7 @@
   owner.contains = function (str1, str2) {
     var self = this;
     if (this.isNull(str1) || this.isNull(str2)) return false;
-    if (self.isArray(str1)) {
-      return self.each(str1, function (i, str) {
-        if (str == str2) return true;
-      });
-    } else {
-      return str1 && str2 && str1.indexOf(str2) > -1;
-    }
+    return str1.indexOf(str2) > -1;
   };
 
   /**
@@ -496,10 +490,8 @@
   owner.unique = function (array) {
     if (this.isNull(array)) return array;
     var newArray = [];
-    var map = {};
     this.each(array, function (i, value) {
-      if (map[value]) return;
-      map[value] = true;
+      if (newArray.indexOf(value) > -1) return;
       newArray.push(value);
     });
     return newArray;
@@ -517,35 +509,6 @@
     }).filter(function (name) {
       return name != 'function';
     });
-  };
-
-  /**
-   * 处理URL
-   * @method wrapUrl
-   * @param  {String} _url 原始URL
-   * @return {String}      处理过的URL
-   * @static
-   */
-  owner.wrapUrl = function (url) {
-    if (this.isNull(url)) return url;
-    if (url.indexOf('?') > -1) {
-      url += "&__t=" + this.newGuid();
-    } else {
-      url += "?__t=" + this.newGuid();
-    }
-    return url;
-  };
-
-  /**
-   * 休眼
-   * @method sleep
-   * @param {Number} s 休眠时间（毫秒）
-   * @static
-   */
-  owner.sleep = function (s) {
-    var time = (new Date()).getTime() + s;
-    while ((new Date()).getTime() + 1 < time);
-    return;
   };
 
   /**
