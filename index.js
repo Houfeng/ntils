@@ -342,9 +342,12 @@
    * @param {Object} obj2 目标对象
    * @static
    */
-  owner.copy = function (obj1, obj2) {
+  owner.copy = function (obj1, obj2, igonreArray) {
     obj2 = obj2 || {};
     this.each(obj1, function (name) {
+      if (igonreArray && igonreArray.indexOf(name) > -1) {
+        return;
+      }
       try {
         obj2[name] = obj1[name];
       } catch (ex) { }
@@ -382,6 +385,17 @@
   owner.create = function (proto) {
     if (Object.create) return Object.create(proto);
     return { __proto__: proto };
+  };
+
+  /**
+   * 设置 proto
+   */
+  owner.setProto = function (obj, prototype) {
+    if (obj.__proto__) {
+      return owner.setPrototype(obj.__proto__);
+    } else {
+      obj.__proto__ = prototype;
+    }
   };
 
   /**
