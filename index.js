@@ -352,7 +352,11 @@
         return;
       }
       try {
-        obj2[name] = obj1[name];
+        if (Object.getOwnPropertyDescriptor) {
+          Object.defineProperty(obj2, name, Object.getOwnPropertyDescriptor(obj1, name));
+        } else {
+          obj2[name] = obj1[name];
+        }
       } catch (ex) { }
     })
     return obj2;
