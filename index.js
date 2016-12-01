@@ -349,7 +349,7 @@
     obj2 = obj2 || {};
     this.each(obj1, function (name) {
       if (igonreArray && igonreArray.indexOf(name) > -1) {
-        if (errorMessage) throw new Error(errorMessage);
+        if (errorMessage) throw new Error(errorMessage.replace('{name}', name));
         return;
       }
       try {
