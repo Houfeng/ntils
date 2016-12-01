@@ -1,10 +1,9 @@
-(function (owner) {
-  "use strict";
+(function (ntils) {
 
   /**
    * 空函数
    */
-  owner.noop = function () { };
+  ntils.noop = function () { };
 
   /**
    * 验证一个对象是否为NULL
@@ -13,7 +12,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isNull = function (obj) {
+  ntils.isNull = function (obj) {
     return obj === null || typeof obj === "undefined";
   };
 
@@ -24,7 +23,7 @@
    * @return {String}     结果字符串
    * @static
    */
-  owner.trim = function (str) {
+  ntils.trim = function (str) {
     if (this.isNull(str)) return str;
     if (str.trim) {
       return str.trim();
@@ -41,7 +40,7 @@
    * @param {String} str2 替换为的字符串
    * @static
    */
-  owner.replace = function (str, str1, str2) {
+  ntils.replace = function (str, str1, str2) {
     if (this.isNull(str)) return str;
     return str.replace(new RegExp(str1, 'g'), str2);
   };
@@ -54,7 +53,7 @@
    * @return {Boolean} 匹配结果
    * @static
    */
-  owner.startWith = function (str1, str2) {
+  ntils.startWith = function (str1, str2) {
     if (this.isNull(str1) || this.isNull(str2)) return false;
     return str1.indexOf(str2) === 0;
   };
@@ -67,7 +66,7 @@
    * @return {Boolean} 结果
    * @static
    */
-  owner.contains = function (str1, str2) {
+  ntils.contains = function (str1, str2) {
     var self = this;
     if (this.isNull(str1) || this.isNull(str2)) return false;
     return str1.indexOf(str2) > -1;
@@ -81,7 +80,7 @@
    * @return {Boolean} 匹配结果
    * @static
    */
-  owner.endWith = function (str1, str2) {
+  ntils.endWith = function (str1, str2) {
     if (this.isNull(str1) || this.isNull(str2)) return false;
     return str1.indexOf(str2) === (str1.length - str2.length);
   };
@@ -94,7 +93,7 @@
    * @return {Boolean}      结果
    * @static
    */
-  owner.has = owner.hasProperty = function (obj, name) {
+  ntils.has = ntils.hasProperty = function (obj, name) {
     if (this.isNull(obj) || this.isNull(name)) return false;
     return (name in obj) || (obj.hasOwnProperty(name));
   };
@@ -106,7 +105,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isFunction = function (obj) {
+  ntils.isFunction = function (obj) {
     if (this.isNull(obj)) return false;
     return typeof obj === "function";
   };
@@ -118,7 +117,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isString = function (obj) {
+  ntils.isString = function (obj) {
     if (this.isNull(obj)) return false;
     return typeof obj === 'string' || obj instanceof String;
   };
@@ -130,7 +129,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isNumber = function (obj) {
+  ntils.isNumber = function (obj) {
     if (this.isNull(obj)) return false;
     return typeof obj === 'number' || obj instanceof Number;
   };
@@ -142,7 +141,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isBoolean = function (obj) {
+  ntils.isBoolean = function (obj) {
     if (this.isNull(obj)) return false;
     return typeof obj === 'boolean' || obj instanceof Boolean;
   };
@@ -154,10 +153,14 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isElement = function (obj) {
+  ntils.isElement = function (obj) {
     if (this.isNull(obj)) return false;
-    if (window.Element) return obj instanceof Element;
-    else return (obj.tagName && obj.nodeType && obj.nodeName && obj.attributes && obj.ownerDocument);
+    if (window.Element) {
+      return obj instanceof Element;
+    }
+    else {
+      return (obj.tagName && obj.nodeType && obj.nodeName && obj.attributes && obj.ownerDocument);
+    }
   };
 
   /**
@@ -167,7 +170,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isText = function (obj) {
+  ntils.isText = function (obj) {
     if (this.isNull(obj)) return false;
     return obj instanceof Text;
   };
@@ -179,7 +182,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isObject = function (obj) {
+  ntils.isObject = function (obj) {
     if (this.isNull(obj)) return false;
     return typeof obj === "object";
   };
@@ -191,7 +194,7 @@
    * @return {Boolean}     结果
    * @static
    */
-  owner.isArray = function (obj) {
+  ntils.isArray = function (obj) {
     if (this.isNull(obj)) return false;
     var v1 = Object.prototype.toString.call(obj) === '[object Array]';
     var v2 = obj instanceof Array;
@@ -207,7 +210,7 @@
    * @return {Boolean}           结果
    * @static
    */
-  owner.isDate = function (val) {
+  ntils.isDate = function (val) {
     if (this.isNull(val)) return false;
     return val instanceof Date;
   };
@@ -219,7 +222,7 @@
    * @return {Array} 转换结果数组
    * @static
    */
-  owner.toArray = function (array) {
+  ntils.toArray = function (array) {
     if (this.isNull(array)) return [];
     return Array.prototype.slice.call(array);
   };
@@ -231,7 +234,7 @@
    * @return {Date} 日期对象
    * @static
    */
-  owner.toDate = function (val) {
+  ntils.toDate = function (val) {
     var self = this;
     if (self.isNumber(val))
       return new Date(val);
@@ -251,7 +254,7 @@
    * @return {void}                   无返回值
    * @static
    */
-  owner.each = function (list, handler, scope) {
+  ntils.each = function (list, handler, scope) {
     if (this.isNull(list) || this.isNull(handler)) return;
     if (this.isArray(list)) {
       var listLength = list.length;
@@ -276,7 +279,7 @@
    * @return {String} 格式化结果
    * @static
    */
-  owner.formatDate = function (date, format, dict) {
+  ntils.formatDate = function (date, format, dict) {
     if (this.isNull(format) || this.isNull(date)) return date;
     date = this.toDate(date);
     dict = dict || {};
@@ -311,7 +314,7 @@
    * @return {Object} 新对象
    * @static
    */
-  owner.clone = function (obj, igonreArray) {
+  ntils.clone = function (obj, igonreArray) {
     if (this.isNull(obj) || this.isString(obj) || this.isNumber(obj) || this.isBoolean(obj) || this.isDate(obj)) {
       return obj;
     }
@@ -342,7 +345,7 @@
    * @param {Object} obj2 目标对象
    * @static
    */
-  owner.copy = function (obj1, obj2, igonreArray) {
+  ntils.copy = function (obj1, obj2, igonreArray) {
     obj2 = obj2 || {};
     this.each(obj1, function (name) {
       if (igonreArray && igonreArray.indexOf(name) > -1) {
@@ -358,7 +361,7 @@
   /**
    * 定义不可遍历的属性
    **/
-  owner.defineFreezeProp = function (obj, name, value) {
+  ntils.defineFreezeProp = function (obj, name, value) {
     Object.defineProperty(obj, name, {
       value: value,
       enumerable: false,
@@ -370,7 +373,7 @@
   /**
    * 获取所有 key 
    */
-  owner.keys = function (obj) {
+  ntils.keys = function (obj) {
     if (Object.keys) return Object.keys(obj);
     var keys = [];
     this.each(obj, function (key) {
@@ -382,7 +385,7 @@
   /**
    * 创建一个对象
    */
-  owner.create = function (proto) {
+  ntils.create = function (proto) {
     if (Object.create) return Object.create(proto);
     return { __proto__: proto };
   };
@@ -390,9 +393,9 @@
   /**
    * 设置 proto
    */
-  owner.setProto = function (obj, prototype) {
+  ntils.setProto = function (obj, prototype) {
     if (obj.__proto__) {
-      return owner.setPrototype(obj.__proto__);
+      return ntils.setPrototype(obj.__proto__);
     } else {
       obj.__proto__ = prototype;
     }
@@ -401,7 +404,7 @@
   /**
    * 是否深度相等
    */
-  owner.deepEqual = function (a, b) {
+  ntils.deepEqual = function (a, b) {
     if (a === b) return true;
     if (!this.isObject(a) || !this.isObject(b)) return false;
     var aKeys = this.keys(a);
@@ -426,7 +429,7 @@
    * @param {function} handler 执行函数
    * @returns {void} 无返回
    */
-  owner.fromTo = function (fromNum, toNum, step, handler) {
+  ntils.fromTo = function (fromNum, toNum, step, handler) {
     if (!handler) handler = [step, step = handler][0];
     step = Math.abs(step || 1);
     if (fromNum < toNum) {
@@ -442,7 +445,7 @@
    * @return {String} GUID字符串
    * @static
    */
-  owner.newGuid = function () {
+  ntils.newGuid = function () {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -452,7 +455,7 @@
   /**
    * 对象变换
    **/
-  owner.map = function (list, fn) {
+  ntils.map = function (list, fn) {
     var buffer = this.isArray(list) ? [] : {};
     this.each(list, function (name, value) {
       buffer[name] = fn(name, value);
@@ -463,7 +466,7 @@
   /**
    * 通过路径设置属性值
    */
-  owner.setByPath = function (obj, path, value) {
+  ntils.setByPath = function (obj, path, value) {
     if (this.isNull(obj) || this.isNull(path) || path === '') {
       return;
     }
@@ -484,7 +487,7 @@
   /**
    * 通过路径获取属性值
    */
-  owner.getByPath = function (obj, path) {
+  ntils.getByPath = function (obj, path) {
     if (this.isNull(obj) || this.isNull(path) || path === '') {
       return obj;
     }
@@ -501,7 +504,7 @@
   /**
    * 数组去重
    **/
-  owner.unique = function (array) {
+  ntils.unique = function (array) {
     if (this.isNull(array)) return array;
     var newArray = [];
     this.each(array, function (i, value) {
@@ -514,7 +517,7 @@
   /**
    * 解析 function 的参数列表
    **/
-  owner.getFunctionArgumentNames = function (fn) {
+  ntils.getFunctionArgumentNames = function (fn) {
     if (!fn) return [];
     var src = fn.toString();
     var parts = src.split(')')[0].split('=>')[0].split('(');
@@ -536,22 +539,22 @@
    * @param {Number} mode 模式
    * @param {Boolean} merge 深度合并
    */
-  owner.mix = function (r, s, ov, wl, mode, merge) {
+  ntils.mix = function (r, s, ov, wl, mode, merge) {
     if (!s || !r) {
-      return r || owner;
+      return r || ntils;
     }
     //根据模式来判断，默认是Obj to Obj的  
     if (mode) {
       switch (mode) {
         case 1: // proto to proto  
-          return owner.mix(r.prototype, s.prototype, ov, wl, 0, merge);
+          return ntils.mix(r.prototype, s.prototype, ov, wl, 0, merge);
         case 2: // object to object and proto to proto  
-          owner.mix(r.prototype, s.prototype, ov, wl, 0, merge);
+          ntils.mix(r.prototype, s.prototype, ov, wl, 0, merge);
           break; // pass through  
         case 3: // proto to static  
-          return owner.mix(r, s.prototype, ov, wl, 0, merge);
+          return ntils.mix(r, s.prototype, ov, wl, 0, merge);
         case 4: // static to proto  
-          return owner.mix(r.prototype, s, ov, wl, 0, merge);
+          return ntils.mix(r.prototype, s, ov, wl, 0, merge);
         default: // object to object is what happens below  
       }
     }
@@ -561,10 +564,10 @@
     if (wl && wl.length) {
       for (i = 0, l = wl.length; i < l; ++i) {
         p = wl[i];
-        isObject = owner.isObject(r[p]); //看具体的属性是什么类型的  
+        isObject = ntils.isObject(r[p]); //看具体的属性是什么类型的  
         if (s.hasOwnProperty(p)) { //如果这个属性是p自己的  
           if (merge && isObject) { //如果设定了merge并且属性是一个对象，那么就调用mix本身，把s[p]的属性加到r[p]上面  
-            owner.mix(r[p], s[p]);
+            ntils.mix(r[p], s[p]);
           } else if (ov || !(p in r)) { //如果允许ov或者r里面没有p，那么就在r里面加上p这个属性  
             r[p] = s[p];
           }
@@ -573,8 +576,8 @@
     } else { //如果没有wl  
       for (i in s) { //遍历s里面的属性  
         if (s.hasOwnProperty(i)) { //如果i是s本身的属性，就按规则合并属性  
-          if (merge && owner.isObject(r[i], true)) {
-            owner.mix(r[i], s[i], ov, wl, 0, true); // recursive  
+          if (merge && ntils.isObject(r[i], true)) {
+            ntils.mix(r[i], s[i], ov, wl, 0, true); // recursive  
           } else if (ov || !(i in r)) {
             r[i] = s[i];
           }
@@ -587,7 +590,7 @@
   /**
    * 缩短字符串
    */
-  owner.short = function (str, maxLength) {
+  ntils.short = function (str, maxLength) {
     if (!str) return str;
     maxLength = maxLength || 40;
     var strLength = str.length;
@@ -598,7 +601,7 @@
   /**
    * 首字母大写
    */
-  owner.firstUpper = function (str) {
+  ntils.firstUpper = function (str) {
     if (this.isNull(str)) return;
     str[0] = str[0].toLowerCase();
     return str;
@@ -609,7 +612,7 @@
    * @param {string} str 字符串
    * @returns {HTMLNode} 解析后的 DOM 
    */
-  owner.parseDom = function (str) {
+  ntils.parseDom = function (str) {
     this._PARSER_DOM_DIV = this._PARSER_DOM_DIV || document.createElement('dev');
     this._PARSER_DOM_DIV.innerHTML = str;
     var domNodes = this.toArray(this._PARSER_DOM_DIV.childNodes);
@@ -617,14 +620,4 @@
     return domNodes;
   };
 
-  //----
-
-  //兼容AMD模块
-  if (typeof define === 'function' && define.amd) {
-    define('ntils', [], function () {
-      return owner;
-    });
-  }
-
 })((typeof exports === 'undefined') ? (window.ntils = {}) : exports);
-//-
