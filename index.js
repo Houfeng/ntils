@@ -107,9 +107,7 @@
    */
   ntils.isFunction = function (obj) {
     if (this.isNull(obj)) return false;
-    return typeof obj === "function" ||
-      obj instanceof Function ||
-      Object.prototype.toString.call(obj) === '[object Function]';
+    return typeof obj === "function";
   };
 
   /**
