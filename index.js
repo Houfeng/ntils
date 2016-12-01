@@ -345,10 +345,11 @@
    * @param {Object} obj2 目标对象
    * @static
    */
-  ntils.copy = function (obj1, obj2, igonreArray) {
+  ntils.copy = function (obj1, obj2, igonreArray, errorMessage) {
     obj2 = obj2 || {};
     this.each(obj1, function (name) {
       if (igonreArray && igonreArray.indexOf(name) > -1) {
+        if (errorMessage) throw new Error(errorMessage);
         return;
       }
       try {
