@@ -216,6 +216,17 @@
   };
 
   /**
+   * 验证是不是一个正则对象
+   * @method isDate
+   * @param {Object} val   要检查的对象
+   * @return {Boolean}           结果
+   * @static
+   */
+  ntils.isRegexp = function (val) {
+    return val instanceof RegExp;
+  };
+
+  /**
    * 转换为数组
    * @method toArray
    * @param {Array|Object} array 伪数组
@@ -308,60 +319,106 @@
   };
 
   /**
+   * 拷贝对象
+   * @method copy
+   * @param {Object} src 源对象
+   * @param {Object} dst 目标对象
+   * @param {String} err 错误消息模板
+   * @static
+   */
+  ntils.copy = function (src, dst, igonres, err) {
+    dst = dst || (this.isArray(src) ? [] : {});
+    this.each(src, function (key) {
+      if (igonres && igonres.indexOf(key) > -1) {
+        if (err) throw new Error(err.replace('{name}', key));
+        return;
+      }
+      try {
+        if (Object.getOwnPropertyDescriptor) {
+          Object.defineProperty(dst, key, Object.getOwnPropertyDescriptor(src, key));
+        } else {
+          dst[key] = src[key];
+        }
+      } catch (ex) { }
+    })
+    return dst;
+  };
+
+  /**
    * 深度克隆对象
    * @method clone
-   * @param {Object} obj 源对象
+   * @param {Object} src 源对象
    * @return {Object} 新对象
    * @static
    */
-  ntils.clone = function (obj, igonreArray) {
-    if (this.isNull(obj) || this.isString(obj) || this.isNumber(obj) || this.isBoolean(obj) || this.isDate(obj)) {
-      return obj;
+  ntils.clone = function (src, igonres) {
+    if (this.isNull(src) ||
+      this.isString(src) ||
+      this.isNumber(src) ||
+      this.isBoolean(src) ||
+      this.isDate(src)) {
+      return src;
     }
-    var objClone = obj;
+    var objClone = src;
     try {
-      objClone = new obj.constructor();
+      objClone = new src.constructor();
     } catch (ex) { }
-    for (var key in obj) {
-      if (objClone[key] != obj[key] && !this.contains(igonreArray, key)) {
-        if (typeof (obj[key]) === 'object') {
-          objClone[key] = this.clone(obj[key], igonreArray);
+    this.each(src, function (key, value) {
+      if (objClone[key] != value && !this.contains(igonres, key)) {
+        if (this.isObject(value)) {
+          objClone[key] = this.clone(value, igonres);
         } else {
-          objClone[key] = obj[key];
+          objClone[key] = value;
         }
       }
-    }
-    this.each(['toString', 'valueOf'], function (i, name) {
-      if (this.contains(igonreArray, key)) return;
-      objClone[name] = obj[name];
+    }, this);
+    ['toString', 'valueOf'].forEach(function (key) {
+      if (this.contains(igonres, key)) return;
+      this.defineFreezeProp(objClone, key, src[key]);
     }, this);
     return objClone;
   };
 
   /**
-   * 拷贝对象
-   * @method copy
-   * @param {Object} obj1 源对象
-   * @param {Object} obj2 目标对象
-   * @static
+   * 合并对象
+   * @method mix
+   * @return 合并后的对象
+   * @param {Object} dst 目标对象
+   * @param {Object} src 源对象
+   * @param {Array} igonres 忽略的属性名,
+   * @param {Number} mode 模式
    */
-  ntils.copy = function (obj1, obj2, igonreArray, errorMessage) {
-    obj2 = obj2 || {};
-    this.each(obj1, function (name) {
-      if (igonreArray && igonreArray.indexOf(name) > -1) {
-        if (errorMessage) throw new Error(errorMessage.replace('{name}', name));
-        return;
+  ntils.mix = function (dst, src, igonres, mode) {
+    //根据模式来判断，默认是Obj to Obj的  
+    if (mode) {
+      switch (mode) {
+        case 1: // proto to proto  
+          return ntils.mix(dst.prototype, src.prototype, igonres, 0);
+        case 2: // object to object and proto to proto  
+          ntils.mix(dst.prototype, src.prototype, igonres, 0);
+          break; // pass through  
+        case 3: // proto to static  
+          return ntils.mix(dst, src.prototype, igonres, 0);
+        case 4: // static to proto  
+          return ntils.mix(dst.prototype, src, igonres, 0);
+        default: // object to object is what happens below  
       }
-      try {
-        if (Object.getOwnPropertyDescriptor) {
-          Object.defineProperty(obj2, name, Object.getOwnPropertyDescriptor(obj1, name));
-        } else {
-          obj2[name] = obj1[name];
-        }
-      } catch (ex) { }
-    })
-    return obj2;
+    }
+    //---
+    src = src || {};
+    dst = dst || (this.isArray(src) ? [] : {});
+    this.keys(src).forEach(function (key) {
+      if (this.contains(igonres, key)) return;
+      if (this.isObject(src[key]) &&
+        (src[key].constructor == Object || src[key].constructor == Array)) {
+        dst[key] = ntils.mix(dst[key], src[key], igonres, 0);
+      } else {
+        dst[key] = src[key];
+      }
+    }, this);
+    return dst;
   };
+
 
   /**
    * 定义不可遍历的属性
@@ -531,65 +588,6 @@
     }).filter(function (name) {
       return name != 'function';
     });
-  };
-
-  /**
-   * 合并对象
-   * @method mix
-   * @return 合并后的对象
-   * @param {Object} r 目标对象
-   * @param {Object} s 源对象
-   * @param {Boolean} ov 是否覆盖
-   * @param {Object} wl 白名单
-   * @param {Number} mode 模式
-   * @param {Boolean} merge 深度合并
-   */
-  ntils.mix = function (r, s, ov, wl, mode, merge) {
-    if (!s || !r) {
-      return r || ntils;
-    }
-    //根据模式来判断，默认是Obj to Obj的  
-    if (mode) {
-      switch (mode) {
-        case 1: // proto to proto  
-          return ntils.mix(r.prototype, s.prototype, ov, wl, 0, merge);
-        case 2: // object to object and proto to proto  
-          ntils.mix(r.prototype, s.prototype, ov, wl, 0, merge);
-          break; // pass through  
-        case 3: // proto to static  
-          return ntils.mix(r, s.prototype, ov, wl, 0, merge);
-        case 4: // static to proto  
-          return ntils.mix(r.prototype, s, ov, wl, 0, merge);
-        default: // object to object is what happens below  
-      }
-    }
-    // Maybe don't even need this wl && wl.length check anymore??  
-    var i, l, p, type;
-    //白名单如果有值，就对白名单里面的属性进行合并，如果有ov，那么就  
-    if (wl && wl.length) {
-      for (i = 0, l = wl.length; i < l; ++i) {
-        p = wl[i];
-        isObject = ntils.isObject(r[p]); //看具体的属性是什么类型的  
-        if (s.hasOwnProperty(p)) { //如果这个属性是p自己的  
-          if (merge && isObject) { //如果设定了merge并且属性是一个对象，那么就调用mix本身，把s[p]的属性加到r[p]上面  
-            ntils.mix(r[p], s[p]);
-          } else if (ov || !(p in r)) { //如果允许ov或者r里面没有p，那么就在r里面加上p这个属性  
-            r[p] = s[p];
-          }
-        }
-      }
-    } else { //如果没有wl  
-      for (i in s) { //遍历s里面的属性  
-        if (s.hasOwnProperty(i)) { //如果i是s本身的属性，就按规则合并属性  
-          if (merge && ntils.isObject(r[i], true)) {
-            ntils.mix(r[i], s[i], ov, wl, 0, true); // recursive  
-          } else if (ov || !(i in r)) {
-            r[i] = s[i];
-          }
-        }
-      }
-    }
-    return r;
   };
 
   /**
