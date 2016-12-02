@@ -410,7 +410,9 @@
     this.keys(src).forEach(function (key) {
       if (this.contains(igonres, key)) return;
       if (this.isObject(src[key]) &&
-        (src[key].constructor == Object || src[key].constructor == Array)) {
+        (src[key].constructor == Object ||
+          src[key].constructor == Array ||
+          src[key].constructor == null)) {
         dst[key] = ntils.mix(dst[key], src[key], igonres, 0);
       } else {
         dst[key] = src[key];
