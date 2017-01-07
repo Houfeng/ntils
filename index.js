@@ -333,13 +333,16 @@
         if (err) throw new Error(err.replace('{name}', key));
         return;
       }
-      try {
-        if (Object.getOwnPropertyDescriptor) {
+      delete dst[key];
+      if (Object.getOwnPropertyDescriptor) {
+        try {
           Object.defineProperty(dst, key, Object.getOwnPropertyDescriptor(src, key));
-        } else {
+        } catch (ex) {
           dst[key] = src[key];
         }
-      } catch (ex) { }
+      } else {
+        dst[key] = src[key];
+      }
     })
     return dst;
   };
@@ -421,7 +424,6 @@
     return dst;
   };
 
-
   /**
    * 定义不可遍历的属性
    **/
@@ -434,7 +436,7 @@
         writable: false //能不能用「赋值」运算更改
       });
     } catch (err) {
-      //noop
+      obj[name] = value;
     }
   };
 
