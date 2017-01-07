@@ -323,16 +323,12 @@
    * @method copy
    * @param {Object} src 源对象
    * @param {Object} dst 目标对象
-   * @param {String} err 错误消息模板
    * @static
    */
-  ntils.copy = function (src, dst, igonres, err) {
+  ntils.copy = function (src, dst, igonres) {
     dst = dst || (this.isArray(src) ? [] : {});
     this.each(src, function (key) {
-      if (igonres && igonres.indexOf(key) > -1) {
-        if (err) throw new Error(err.replace('{name}', key));
-        return;
-      }
+      if (igonres && igonres.indexOf(key) > -1) return;
       delete dst[key];
       if (Object.getOwnPropertyDescriptor) {
         try {
