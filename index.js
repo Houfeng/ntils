@@ -459,11 +459,11 @@
   /**
    * 设置 proto
    */
-  ntils.setProto = function (obj, prototype) {
-    if (obj.__proto__) {
-      return ntils.setPrototype(obj.__proto__);
+  ntils.setPrototypeOf = function (obj, proto) {
+    if (Object.setPrototypeOf) {
+      return Object.setPrototypeOf(obj, proto);
     } else {
-      obj.__proto__ = prototype;
+      obj.__proto__ = proto;
     }
   };
 
