@@ -432,6 +432,7 @@
         writable: false //能不能用「赋值」运算更改
       });
     } catch (err) {
+      delete obj[name];
       obj[name] = value;
     }
   };
