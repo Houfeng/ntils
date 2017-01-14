@@ -635,11 +635,14 @@
    * @returns {HTMLNode} 解析后的 DOM 
    */
   ntils.parseDom = function (str) {
-    this._PARSER_DOM_DIV = this._PARSER_DOM_DIV || document.createElement('dev');
-    this._PARSER_DOM_DIV.innerHTML = str;
-    var domNodes = this.toArray(this._PARSER_DOM_DIV.childNodes);
-    this._PARSER_DOM_DIV.innerHTML = '';
-    return domNodes;
+    this._PDD_ = this._PDD_ || document.createElement('div');
+    this._PDD_.innerHTML = ntils.trim(str);
+    var firstNode = this._PDD_.childNodes[0];
+    //先 clone 一份再通过 innerHTML 清空
+    //否则 IE9 下，清空时会导出返回的 DOM 没有子结点
+    if (firstNode) firstNode = firstNode.cloneNode(true);
+    this._PDD_.innerHTML = '';
+    return firstNode;
   };
 
 })((typeof exports === 'undefined') ? (window.ntils = {}) : exports);
