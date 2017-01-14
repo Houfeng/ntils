@@ -451,7 +451,7 @@
    * 创建一个对象
    */
   ntils.create = function (proto, props) {
-    if (Object.create) return Object.create(proto);
+    if (Object.create) return Object.create(proto, props);
     var Cotr = function () { };
     Cotr.prototype = proto;
     var obj = new Cotr();
