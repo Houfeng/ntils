@@ -466,7 +466,7 @@
    */
   ntils.setPrototypeOf = function (obj, proto) {
     if (Object.setPrototypeOf) {
-      return Object.setPrototypeOf(obj, proto);
+      return Object.setPrototypeOf(obj, proto || this.create(null));
     } else {
       if (!('__proto__' in Object)) this.copy(proto, obj);
       obj.__proto__ = proto;
