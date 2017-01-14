@@ -157,8 +157,7 @@
     if (this.isNull(obj)) return false;
     if (window.Element) {
       return obj instanceof Element;
-    }
-    else {
+    } else {
       return (obj.tagName && obj.nodeType && obj.nodeName && obj.attributes && obj.ownerDocument);
     }
   };
@@ -460,14 +459,25 @@
 
   /**
    * 设置 proto
+   * 在不支持 setPrototypeOf 也不支持 __proto__ 的浏览器
+   * 中，会采用 copy 方式
    */
   ntils.setPrototypeOf = function (obj, proto) {
     if (Object.setPrototypeOf) {
       return Object.setPrototypeOf(obj, proto);
     } else {
-      if (!('__proto' in obj)) this.copy(proto, obj);
+      if (!('__proto__' in obj)) this.copy(proto, obj);
       obj.__proto__ = proto;
     }
+  };
+
+  /**
+   * 获取 proto
+   */
+  ntils.getPrototypeOf = function (obj) {
+    if (obj.__proto__) return obj.__proto__;
+    if (Object.getPrototypeOf) return Object.getPrototypeOf(obj);
+    if (obj.constructor) return obj.constructor.prototype;
   };
 
   /**
