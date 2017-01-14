@@ -466,7 +466,7 @@
     if (Object.setPrototypeOf) {
       return Object.setPrototypeOf(obj, proto);
     } else {
-      if (!('__proto__' in obj)) this.copy(proto, obj);
+      if (!('__proto__' in Object)) this.copy(proto, obj);
       obj.__proto__ = proto;
     }
   };
