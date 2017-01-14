@@ -453,7 +453,9 @@
    */
   ntils.create = function (proto) {
     if (Object.create) return Object.create(proto);
-    return { __proto__: proto };
+    var Cotr = function () { };
+    Cotr.prototype = proto;
+    return new Cotr();
   };
 
   /**
@@ -463,6 +465,7 @@
     if (Object.setPrototypeOf) {
       return Object.setPrototypeOf(obj, proto);
     } else {
+      if (!('__proto' in obj)) this.copy(proto, obj);
       obj.__proto__ = proto;
     }
   };
