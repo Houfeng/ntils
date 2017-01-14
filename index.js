@@ -450,11 +450,13 @@
   /**
    * 创建一个对象
    */
-  ntils.create = function (proto) {
+  ntils.create = function (proto, props) {
     if (Object.create) return Object.create(proto);
     var Cotr = function () { };
     Cotr.prototype = proto;
-    return new Cotr();
+    var obj = new Cotr();
+    if (props) this.copy(props, obj);
+    return obj;
   };
 
   /**
