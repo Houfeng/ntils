@@ -630,6 +630,13 @@
   };
 
   /**
+   * 编码正则字符串
+   */
+  ntils.escapeRegExp = function (str) {
+    return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+  };
+
+  /**
    * 解析字符串为 dom 
    * @param {string} str 字符串
    * @returns {HTMLNode} 解析后的 DOM 
