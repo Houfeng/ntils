@@ -1,6 +1,6 @@
 {
   "name": "ntils",
-  "version": "2.0.15",
+  "version": "2.1.0",
   "description": "一个 Node & Browser 工具函数集",
   "main": "index.js",
   "scripts": {

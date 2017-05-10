@@ -625,8 +625,7 @@
    */
   ntils.firstUpper = function (str) {
     if (this.isNull(str)) return;
-    str[0] = str[0].toLowerCase();
-    return str;
+    return str.substring(0,1).toUpperCase()+str.substring(1);
   };
 
   /**
