@@ -412,7 +412,7 @@
         (src[key].constructor == Object ||
           src[key].constructor == Array ||
           src[key].constructor == null)) {
-        dst[key] = ntils.mix(dst[key], src[key], igonres, 0);
+        dst[key] = ntils.mix(dst[key], src[key], igonres, 0, igonreNull);
       } else {
         dst[key] = src[key];
       }
