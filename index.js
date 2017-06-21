@@ -386,7 +386,7 @@
    * @param {Array} igonres 忽略的属性名,
    * @param {Number} mode 模式
    */
-  ntils.mix = function (dst, src, igonres, mode) {
+  ntils.mix = function (dst, src, igonres, mode, igonreNull) {
     //根据模式来判断，默认是Obj to Obj的  
     if (mode) {
       switch (mode) {
@@ -407,6 +407,7 @@
     dst = dst || (this.isArray(src) ? [] : {});
     this.keys(src).forEach(function (key) {
       if (this.contains(igonres, key)) return;
+      if (igonreNull && this.isNull(src[key])) return;
       if (this.isObject(src[key]) &&
         (src[key].constructor == Object ||
           src[key].constructor == Array ||
@@ -625,7 +626,7 @@
    */
   ntils.firstUpper = function (str) {
     if (this.isNull(str)) return;
-    return str.substring(0,1).toUpperCase()+str.substring(1);
+    return str.substring(0, 1).toUpperCase() + str.substring(1);
   };
 
   /**
