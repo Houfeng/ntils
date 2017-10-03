@@ -9,7 +9,7 @@ export function toString(obj) {
 }
 
 export function getType(obj) {
-  let str = toString(obj);
+  var str = toString(obj);
   return (/^\[object (.+)\]$/i.exec(str))[1];
 }
 
@@ -21,7 +21,7 @@ export function getType(obj) {
  * @static
  */
 export function isNull(obj) {
-  let type = getType(obj);
+  var type = getType(obj);
   return type === 'Undefined' || type === 'Null';
 };
 
@@ -106,7 +106,7 @@ export function has(obj, name) {
   if (isNull(obj) || isNull(name)) return false;
   return (name in obj) || (obj.hasOwnProperty(name));
 };
-export const hasProperty = has;
+export var hasProperty = has;
 
 /**
  * 验证一个对象是否为Function
