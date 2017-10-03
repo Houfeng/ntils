@@ -195,7 +195,8 @@ export function isText(obj) {
  */
 export function isObject(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === 'Object';
+  let type = getType(obj);
+  return type === 'Object' || type === 'Array';
 };
 
 /**

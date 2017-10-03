@@ -15,6 +15,8 @@ build:
       libraryTarget: 'umd'
       umdNamedDefine: true
     useBuiltIns: false
+    presetEnv: false
+    transform: false
 
 dev:
   - name: clean
@@ -35,3 +37,5 @@ dev:
       umdNamedDefine: true
     loose: false
     useBuiltIns: false
+    presetEnv: false
+    transform: false
