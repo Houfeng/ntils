@@ -1,0 +1,37 @@
+build:
+  - name: clean
+    target: lib
+  - name: webpack
+    entry: 
+      ntils: ./src/index.js
+    template: '-'
+    output: lib
+    folders:
+      js: '.'
+    common:
+      disabled: true
+    umd:
+      library: '[name]'
+      libraryTarget: 'umd'
+      umdNamedDefine: true
+    useBuiltIns: false
+
+dev:
+  - name: clean
+    target: lib
+  - name: webpack
+    watch: true
+    entry: 
+      ntils: ./src/index.js
+    template: '-'
+    output: lib
+    folders:
+      js: '.'
+    common:
+      disabled: true
+    umd:
+      library: '[name]'
+      libraryTarget: 'umd'
+      umdNamedDefine: true
+    loose: false
+    useBuiltIns: false

@@ -1,8 +1,8 @@
 {
   "name": "ntils",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "一个 Node & Browser 工具函数集",
-  "main": "index.js",
+  "main": "./lib/ntils.js",
   "scripts": {
     "test": "mocha"
   },
