@@ -14,9 +14,9 @@ build:
       library: '[name]'
       libraryTarget: 'umd'
       umdNamedDefine: true
-    useBuiltIns: false
-    presetEnv: false
-    transform: false
+    babel:
+      useBuiltIns: true
+      transform: false
     compress: false
   - name: webpack
     entry: 
@@ -31,9 +31,9 @@ build:
       library: '[name]'
       libraryTarget: 'umd'
       umdNamedDefine: true
-    useBuiltIns: false
-    presetEnv: false
-    transform: false
+    babel:
+      useBuiltIns: true
+      transform: false
 
 dev:
   - name: clean
@@ -52,7 +52,6 @@ dev:
       library: '[name]'
       libraryTarget: 'umd'
       umdNamedDefine: true
-    loose: false
-    useBuiltIns: false
-    presetEnv: false
-    transform: false
+    babel:
+      useBuiltIns: true
+      transform: false
