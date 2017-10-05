@@ -17,6 +17,23 @@ build:
     useBuiltIns: false
     presetEnv: false
     transform: false
+    compress: false
+  - name: webpack
+    entry: 
+      ntils-min: ./src/index.js
+    template: '-'
+    output: lib
+    folders:
+      js: '.'
+    common:
+      disabled: true
+    umd:
+      library: '[name]'
+      libraryTarget: 'umd'
+      umdNamedDefine: true
+    useBuiltIns: false
+    presetEnv: false
+    transform: false
 
 dev:
   - name: clean
