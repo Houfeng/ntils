@@ -657,6 +657,35 @@ export function escapeRegExp(str) {
 };
 
 /**
+  * 将字符串转成「驼峰」式
+  * @param {string} str 原始字符串
+  * @param {number} mode 1 大驼峰，0 小驼峰
+  * @return {string} 转换后的字符串
+  */
+export function toCamelCase(str, mode) {
+  if (str) {
+    str = str.replace(/\-[a-z0-9]/g, $1 => ($1.slice(1).toUpperCase()));
+    str = str.replace(/^[a-z]/i, $1 => {
+      return mode ? $1.toUpperCase() : $1.toLowerCase();
+    });
+  }
+  return str;
+}
+
+/**
+ * 将字符串转成分隔形式
+ * @param {string} str 原始字符串
+ * @return {string} 转换后的字符串
+ */
+export function toSplitCase(str) {
+  if (str) {
+    str = str.replace(/([A-Z])/g, '-$1');
+    if (str[0] == '-') str = str.slice(1);
+  }
+  return str;
+}
+
+/**
  * 解析字符串为 dom 
  * @param {string} str 字符串
  * @returns {HTMLNode} 解析后的 DOM 
