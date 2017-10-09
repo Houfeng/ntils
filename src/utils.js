@@ -664,8 +664,10 @@ export function escapeRegExp(str) {
   */
 export function toCamelCase(str, mode) {
   if (str) {
-    str = str.replace(/\-[a-z0-9]/g, $1 => ($1.slice(1).toUpperCase()));
-    str = str.replace(/^[a-z]/i, $1 => {
+    str = str.replace(/\-[a-z0-9]/g, function ($1) {
+      return $1.slice(1).toUpperCase()
+    });
+    str = str.replace(/^[a-z]/i, function ($1) {
       return mode ? $1.toUpperCase() : $1.toLowerCase();
     });
   }
