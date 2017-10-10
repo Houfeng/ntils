@@ -1,4 +1,3 @@
-
 /**
  * 空函数
  */
@@ -165,7 +164,7 @@ export function isBoolean(obj) {
  */
 export function isElement(obj) {
   if (isNull(obj)) return false;
-  if (window.Element) {
+  if (win.Element) {
     return obj instanceof Element;
   } else {
     return (obj.tagName && obj.nodeType &&
@@ -622,7 +621,7 @@ export function getFunctionArgumentNames(fn) {
   var src = fn.toString();
   var parts = src.split(')')[0].split('=>')[0].split('(');
   return (parts[1] || parts[0]).split(',').map(function (name) {
-    return name.trim();
+    return trim(name);
   }).filter(function (name) {
     return name != 'function';
   });
@@ -687,19 +686,27 @@ export function toSplitCase(str) {
   return str;
 }
 
+export function htmlPrefilter(html) {
+  var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+  return html.replace(rxhtmlTag, "<$1></$2>");
+}
+
 /**
  * 解析字符串为 dom 
  * @param {string} str 字符串
  * @returns {HTMLNode} 解析后的 DOM 
  */
-export function parseDom(str) {
-  window._NTILS_PARSE_DOM_ = window._NTILS_PARSE_DOM_ ||
-    document.createElement('div');
-  window._NTILS_PARSE_DOM_.innerHTML = trim(str);
-  var firstNode = window._NTILS_PARSE_DOM_.childNodes[0];
+export function parseHTML(str) {
+  str = str || ' ';
+  var parent = document.createElement('div');
+  parent.innerHTML = htmlPrefilter(str);
+  var childNodes = toArray(parent.childNodes);
   //先 clone 一份再通过 innerHTML 清空
   //否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
-  if (firstNode) firstNode = firstNode.cloneNode(true);
-  window._NTILS_PARSE_DOM_.innerHTML = '';
-  return firstNode;
+  // if (firstNode) firstNode = firstNode.cloneNode(true);
+  // win._NPH_.innerHTML = '';
+  each(childNodes, function (childNode) {
+    parent.removeChild(childNode);
+  });
+  return childNodes;
 };
