@@ -1,6 +1,6 @@
 {
   "name": "ntils",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "一个 Node & Browser 工具函数集",
   "main": "./lib/ntils.js",
   "jsnext:main": "./src/index.js",
