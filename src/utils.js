@@ -388,7 +388,7 @@ export function clone(src, igonres) {
   }, this);
   ['toString', 'valueOf'].forEach(function (key) {
     if (contains(igonres, key)) return;
-    readOnly(objClone, key, src[key]);
+    final(objClone, key, src[key]);
   }, this);
   return objClone;
 };
