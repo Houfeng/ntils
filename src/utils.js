@@ -388,7 +388,7 @@ export function clone(src, igonres) {
   }, this);
   ['toString', 'valueOf'].forEach(function (key) {
     if (contains(igonres, key)) return;
-    defineFreezeProp(objClone, key, src[key]);
+    readOnly(objClone, key, src[key]);
   }, this);
   return objClone;
 };
@@ -439,13 +439,24 @@ export function mix(dst, src, igonres, mode, igonreNull) {
 /**
  * 定义不可遍历的属性
  **/
-export function defineFreezeProp(obj, name, value) {
+export function final(obj, name, value) {
+  if (arguments.length < 1) throw new Error('Parameter missing');
+  if (arguments.length < 2) {
+    return each(obj, function (name, value) {
+      final(obj, name, value);
+    });
+  }
+  if (arguments.length < 3) return final(obj, name, obj[name]);
   try {
     Object.defineProperty(obj, name, {
-      value: value,
-      enumerable: false,
-      configurable: true, //能不能重写定义
-      writable: false //能不能用「赋值」运算更改
+      get: function () {
+        return value;
+      },
+      set: function () {
+        throw new Error('Cannot assign to final property:' + name);
+      },
+      enumerable: false, //不能枚举
+      configurable: false, //不能重写定义
     });
   } catch (err) {
     obj[name] = value;
