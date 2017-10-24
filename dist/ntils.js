@@ -1,13 +1,19 @@
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.ntils = {})));
+}(this, (function (exports) { 'use strict';
+
 /**
  * 空函数
  */
-export function noop() { };
+function noop() { }
 
-export function toString(obj) {
+function toString(obj) {
   return Object.prototype.toString.call(obj);
 }
 
-export function getType(obj) {
+function getType(obj) {
   var str = toString(obj);
   return (/^\[object (.+)\]$/i.exec(str))[1];
 }
@@ -19,10 +25,10 @@ export function getType(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isNull(obj) {
+function isNull(obj) {
   var type = getType(obj);
   return type === 'Undefined' || type === 'Null';
-};
+}
 
 /**
  * 除去字符串两端的空格
@@ -31,14 +37,14 @@ export function isNull(obj) {
  * @return {String}     结果字符串
  * @static
  */
-export function trim(str) {
+function trim(str) {
   if (isNull(str)) return str;
   if (str.trim) {
     return str.trim();
   } else {
     return str.replace(/(^[\\s]*)|([\\s]*$)/g, "");
   }
-};
+}
 
 /**
  * 替换所有
@@ -48,10 +54,10 @@ export function trim(str) {
  * @param {String} str2 替换为的字符串
  * @static
  */
-export function replace(str, str1, str2) {
+function replace(str, str1, str2) {
   if (isNull(str)) return str;
   return str.replace(new RegExp(str1, 'g'), str2);
-};
+}
 
 /**
  * 从字符串开头匹配
@@ -61,10 +67,10 @@ export function replace(str, str1, str2) {
  * @return {Boolean} 匹配结果
  * @static
  */
-export function startWith(str1, str2) {
+function startWith(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) === 0;
-};
+}
 
 /**
  * 是否包含
@@ -74,11 +80,10 @@ export function startWith(str1, str2) {
  * @return {Boolean} 结果
  * @static
  */
-export function contains(str1, str2) {
-  var self = this;
+function contains(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) > -1;
-};
+}
 
 /**
  * 从字符串结束匹配
@@ -88,10 +93,10 @@ export function contains(str1, str2) {
  * @return {Boolean} 匹配结果
  * @static
  */
-export function endWith(str1, str2) {
+function endWith(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) === (str1.length - str2.length);
-};
+}
 
 /**
  * 是否包含属性
@@ -101,11 +106,11 @@ export function endWith(str1, str2) {
  * @return {Boolean}      结果
  * @static
  */
-export function has(obj, name) {
+function has(obj, name) {
   if (isNull(obj) || isNull(name)) return false;
   return (name in obj) || (obj.hasOwnProperty(name));
-};
-export var hasProperty = has;
+}
+var hasProperty = has;
 
 /**
  * 验证一个对象是否为Function
@@ -114,10 +119,10 @@ export var hasProperty = has;
  * @return {Boolean}     结果
  * @static
  */
-export function isFunction(obj) {
+function isFunction(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === "Function";
-};
+}
 
 /**
  * 验证一个对象是否为String
@@ -126,10 +131,10 @@ export function isFunction(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isString(obj) {
+function isString(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'String';
-};
+}
 
 /**
  * 验证一个对象是否为Number
@@ -138,10 +143,10 @@ export function isString(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isNumber(obj) {
+function isNumber(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'Number';
-};
+}
 
 /**
  * 验证一个对象是否为Boolean
@@ -150,10 +155,10 @@ export function isNumber(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isBoolean(obj) {
+function isBoolean(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'Boolean';
-};
+}
 
 /**
  * 验证一个对象是否为HTML Element
@@ -162,7 +167,7 @@ export function isBoolean(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isElement(obj) {
+function isElement(obj) {
   if (isNull(obj)) return false;
   if (win.Element) {
     return obj instanceof Element;
@@ -171,7 +176,7 @@ export function isElement(obj) {
       obj.nodeName && obj.attributes &&
       obj.ownerDocument);
   }
-};
+}
 
 /**
  * 验证一个对象是否为HTML Text Element
@@ -180,10 +185,10 @@ export function isElement(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isText(obj) {
+function isText(obj) {
   if (isNull(obj)) return false;
   return obj instanceof Text;
-};
+}
 
 /**
  * 验证一个对象是否为Object
@@ -192,11 +197,11 @@ export function isText(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isObject(obj) {
+function isObject(obj) {
   if (isNull(obj)) return false;
   var type = getType(obj);
   return type === 'Object' || type === 'Array';
-};
+}
 
 /**
  * 验证一个对象是否为Array或伪Array
@@ -205,14 +210,14 @@ export function isObject(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isArray(obj) {
+function isArray(obj) {
   if (isNull(obj)) return false;
   var v1 = getType(obj) === 'Array';
   var v2 = obj instanceof Array;
   var v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
   var v4 = !isString(obj) && isNumber(obj.length) && obj[0];
   return v1 || v2 || v3 || v4;
-};
+}
 
 /**
  * 验证是不是一个日期对象
@@ -221,10 +226,10 @@ export function isArray(obj) {
  * @return {Boolean}           结果
  * @static
  */
-export function isDate(val) {
+function isDate(val) {
   if (isNull(val)) return false;
   return val instanceof Date;
-};
+}
 
 /**
  * 验证是不是一个正则对象
@@ -233,9 +238,9 @@ export function isDate(val) {
  * @return {Boolean}           结果
  * @static
  */
-export function isRegexp(val) {
+function isRegexp(val) {
   return val instanceof RegExp;
-};
+}
 
 /**
  * 转换为数组
@@ -244,10 +249,10 @@ export function isRegexp(val) {
  * @return {Array} 转换结果数组
  * @static
  */
-export function toArray(array) {
+function toArray(array) {
   if (isNull(array)) return [];
   return Array.prototype.slice.call(array);
-};
+}
 
 /**
  * 转为日期格式
@@ -256,7 +261,7 @@ export function toArray(array) {
  * @return {Date} 日期对象
  * @static
  */
-export function toDate(val) {
+function toDate(val) {
   var self = this;
   if (self.isNumber(val))
     return new Date(val);
@@ -266,7 +271,7 @@ export function toDate(val) {
     return val;
   else
     return null;
-};
+}
 
 /**
  * 遍历一个对像或数组
@@ -276,7 +281,7 @@ export function toDate(val) {
  * @return {void}                   无返回值
  * @static
  */
-export function each(list, handler, scope) {
+function each(list, handler, scope) {
   if (isNull(list) || isNull(handler)) return;
   if (isArray(list)) {
     var listLength = list.length;
@@ -290,7 +295,7 @@ export function each(list, handler, scope) {
       if (!isNull(rs)) return rs;
     }
   }
-};
+}
 
 /**
  * 格式化日期
@@ -301,7 +306,7 @@ export function each(list, handler, scope) {
  * @return {String} 格式化结果
  * @static
  */
-export function formatDate(date, format, dict) {
+function formatDate(date, format, dict) {
   if (isNull(format) || isNull(date)) return date;
   date = toDate(date);
   dict = dict || {};
@@ -314,7 +319,7 @@ export function formatDate(date, format, dict) {
     "w+": date.getDay(), //week
     "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
     "S": date.getMilliseconds() //millisecond
-  }
+  };
   if (/(y+)/.test(format)) {
     format = format.replace(
       RegExp.$1,
@@ -330,7 +335,7 @@ export function formatDate(date, format, dict) {
     }
   }
   return format;
-};
+}
 
 /**
  * 拷贝对象
@@ -339,7 +344,7 @@ export function formatDate(date, format, dict) {
  * @param {Object} dst 目标对象
  * @static
  */
-export function copy(src, dst, igonres) {
+function copy(src, dst, igonres) {
   dst = dst || (isArray(src) ? [] : {});
   each(src, function (key) {
     if (igonres && igonres.indexOf(key) > -1) return;
@@ -354,9 +359,9 @@ export function copy(src, dst, igonres) {
     } else {
       dst[key] = src[key];
     }
-  })
+  });
   return dst;
-};
+}
 
 /**
  * 深度克隆对象
@@ -365,7 +370,7 @@ export function copy(src, dst, igonres) {
  * @return {Object} 新对象
  * @static
  */
-export function clone(src, igonres) {
+function clone(src, igonres) {
   if (isNull(src) ||
     isString(src) ||
     isNumber(src) ||
@@ -391,7 +396,7 @@ export function clone(src, igonres) {
     final(objClone, key, src[key]);
   }, this);
   return objClone;
-};
+}
 
 /**
  * 合并对象
@@ -402,7 +407,7 @@ export function clone(src, igonres) {
  * @param {Array} igonres 忽略的属性名,
  * @param {Number} mode 模式
  */
-export function mix(dst, src, igonres, mode, igonreNull) {
+function mix(dst, src, igonres, mode, igonreNull) {
   //根据模式来判断，默认是Obj to Obj的  
   if (mode) {
     switch (mode) {
@@ -434,12 +439,12 @@ export function mix(dst, src, igonres, mode, igonreNull) {
     }
   }, this);
   return dst;
-};
+}
 
 /**
  * 定义不可遍历的属性
  **/
-export function final(obj, name, value) {
+function final(obj, name, value) {
   if (arguments.length < 1) throw new Error('Parameter missing');
   if (arguments.length < 2) {
     return each(obj, function (name, value) {
@@ -461,59 +466,59 @@ export function final(obj, name, value) {
   } catch (err) {
     obj[name] = value;
   }
-};
+}
 
 /**
  * 获取所有 key 
  */
-export function keys(obj) {
+function keys(obj) {
   if (Object.keys) return Object.keys(obj);
   var keys = [];
   each(obj, function (key) {
     keys.push(key);
   });
   return keys;
-};
+}
 
 /**
  * 创建一个对象
  */
-export function create(proto, props) {
+function create(proto, props) {
   if (Object.create) return Object.create(proto, props);
-  function Cotr() { };
+  function Cotr() { }
   Cotr.prototype = proto;
   var obj = new Cotr();
   if (props) copy(props, obj);
   return obj;
-};
+}
 
 /**
  * 设置 proto
  * 在不支持 setPrototypeOf 也不支持 __proto__ 的浏览器
  * 中，会采用 copy 方式
  */
-export function setPrototypeOf(obj, proto) {
+function setPrototypeOf(obj, proto) {
   if (Object.setPrototypeOf) {
     return Object.setPrototypeOf(obj, proto || create(null));
   } else {
     if (!('__proto__' in Object)) copy(proto, obj);
     obj.__proto__ = proto;
   }
-};
+}
 
 /**
  * 获取 proto
  */
-export function getPrototypeOf(obj) {
+function getPrototypeOf(obj) {
   if (obj.__proto__) return obj.__proto__;
   if (Object.getPrototypeOf) return Object.getPrototypeOf(obj);
   if (obj.constructor) return obj.constructor.prototype;
-};
+}
 
 /**
  * 是否深度相等
  */
-export function deepEqual(a, b) {
+function deepEqual(a, b) {
   if (a === b) return true;
   if (!isObject(a) || !isObject(b)) return false;
   var aKeys = keys(a);
@@ -528,7 +533,7 @@ export function deepEqual(a, b) {
     checkedMap[key] = true;
   }, this);
   return result;
-};
+}
 
 /**
  * 从一个数值循环到别一个数
@@ -538,7 +543,7 @@ export function deepEqual(a, b) {
  * @param {function} handler 执行函数
  * @returns {void} 无返回
  */
-export function fromTo(fromNum, toNum, step, handler) {
+function fromTo(fromNum, toNum, step, handler) {
   if (!handler) handler = [step, step = handler][0];
   step = Math.abs(step || 1);
   if (fromNum < toNum) {
@@ -546,7 +551,7 @@ export function fromTo(fromNum, toNum, step, handler) {
   } else {
     for (var i = fromNum; i >= toNum; i -= step) handler(i);
   }
-};
+}
 
 /**
  * 生成一个Guid
@@ -554,29 +559,29 @@ export function fromTo(fromNum, toNum, step, handler) {
  * @return {String} GUID字符串
  * @static
  */
-export function newGuid() {
+function newGuid() {
   function s4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  };
+  }
   return (s4() + s4() + "-" + s4() + "-" + s4() + "-" +
     s4() + "-" + s4() + s4() + s4());
-};
+}
 
 /**
  * 对象变换
  **/
-export function map(list, fn) {
+function map(list, fn) {
   var buffer = isArray(list) ? [] : {};
   each(list, function (name, value) {
     buffer[name] = fn(name, value);
   });
   return buffer;
-};
+}
 
 /**
  * 通过路径设置属性值
  */
-export function setByPath(obj, path, value) {
+function setByPath(obj, path, value) {
   if (isNull(obj) || isNull(path) || path === '') {
     return;
   }
@@ -592,12 +597,12 @@ export function setByPath(obj, path, value) {
       obj = obj[name];
     }
   }, this);
-};
+}
 
 /**
  * 通过路径获取属性值
  */
-export function getByPath(obj, path) {
+function getByPath(obj, path) {
   if (isNull(obj) || isNull(path) || path === '') {
     return obj;
   }
@@ -609,12 +614,12 @@ export function getByPath(obj, path) {
     if (!isNull(obj)) obj = obj[name];
   }, this);
   return obj;
-};
+}
 
 /**
  * 数组去重
  **/
-export function unique(array) {
+function unique(array) {
   if (isNull(array)) return array;
   var newArray = [];
   each(array, function (i, value) {
@@ -622,12 +627,12 @@ export function unique(array) {
     newArray.push(value);
   });
   return newArray;
-};
+}
 
 /**
  * 解析 function 的参数列表
  **/
-export function getFunctionArgumentNames(fn) {
+function getFunctionArgumentNames(fn) {
   if (!fn) return [];
   var src = fn.toString();
   var parts = src.split(')')[0].split('=>')[0].split('(');
@@ -636,12 +641,12 @@ export function getFunctionArgumentNames(fn) {
   }).filter(function (name) {
     return name != 'function';
   });
-};
+}
 
 /**
  * 缩短字符串
  */
-export function short(str, maxLength) {
+function short(str, maxLength) {
   if (!str) return str;
   maxLength = maxLength || 40;
   var strLength = str.length;
@@ -649,22 +654,22 @@ export function short(str, maxLength) {
   return strLength > maxLength ?
     str.substr(0, trimLength) + '...' + str.substr(strLength - trimLength) :
     str;
-};
+}
 
 /**
  * 首字母大写
  */
-export function firstUpper(str) {
+function firstUpper(str) {
   if (isNull(str)) return;
   return str.substring(0, 1).toUpperCase() + str.substring(1);
-};
+}
 
 /**
  * 编码正则字符串
  */
-export function escapeRegExp(str) {
+function escapeRegExp(str) {
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-};
+}
 
 /**
   * 将字符串转成「驼峰」式
@@ -672,7 +677,7 @@ export function escapeRegExp(str) {
   * @param {number} mode 1 大驼峰，0 小驼峰
   * @return {string} 转换后的字符串
   */
-export function toCamelCase(str, mode) {
+function toCamelCase(str, mode) {
   if (str) {
     str = str.replace(/\-[a-z0-9]/g, function ($1) {
       return $1.slice(1).toUpperCase()
@@ -689,7 +694,7 @@ export function toCamelCase(str, mode) {
  * @param {string} str 原始字符串
  * @return {string} 转换后的字符串
  */
-export function toSplitCase(str) {
+function toSplitCase(str) {
   if (str) {
     str = str.replace(/([A-Z])/g, '-$1');
     if (str[0] == '-') str = str.slice(1);
@@ -697,7 +702,7 @@ export function toSplitCase(str) {
   return str;
 }
 
-export function htmlPrefilter(html) {
+function htmlPrefilter(html) {
   var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
   return html.replace(rxhtmlTag, "<$1></$2>");
 }
@@ -707,7 +712,7 @@ export function htmlPrefilter(html) {
  * @param {string} str 字符串
  * @returns {HTMLNode} 解析后的 DOM 
  */
-export function parseHTML(str) {
+function parseHTML(str) {
   str = str || ' ';
   var parent = document.createElement('div');
   parent.innerHTML = htmlPrefilter(trim(str));
@@ -720,4 +725,57 @@ export function parseHTML(str) {
     parent.removeChild(childNode);
   });
   return childNodes;
-};
+}
+
+exports.noop = noop;
+exports.toString = toString;
+exports.getType = getType;
+exports.isNull = isNull;
+exports.trim = trim;
+exports.replace = replace;
+exports.startWith = startWith;
+exports.contains = contains;
+exports.endWith = endWith;
+exports.has = has;
+exports.hasProperty = hasProperty;
+exports.isFunction = isFunction;
+exports.isString = isString;
+exports.isNumber = isNumber;
+exports.isBoolean = isBoolean;
+exports.isElement = isElement;
+exports.isText = isText;
+exports.isObject = isObject;
+exports.isArray = isArray;
+exports.isDate = isDate;
+exports.isRegexp = isRegexp;
+exports.toArray = toArray;
+exports.toDate = toDate;
+exports.each = each;
+exports.formatDate = formatDate;
+exports.copy = copy;
+exports.clone = clone;
+exports.mix = mix;
+exports.final = final;
+exports.keys = keys;
+exports.create = create;
+exports.setPrototypeOf = setPrototypeOf;
+exports.getPrototypeOf = getPrototypeOf;
+exports.deepEqual = deepEqual;
+exports.fromTo = fromTo;
+exports.newGuid = newGuid;
+exports.map = map;
+exports.setByPath = setByPath;
+exports.getByPath = getByPath;
+exports.unique = unique;
+exports.getFunctionArgumentNames = getFunctionArgumentNames;
+exports.short = short;
+exports.firstUpper = firstUpper;
+exports.escapeRegExp = escapeRegExp;
+exports.toCamelCase = toCamelCase;
+exports.toSplitCase = toSplitCase;
+exports.htmlPrefilter = htmlPrefilter;
+exports.parseHTML = parseHTML;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

@@ -1,9 +1,8 @@
 {
   "name": "ntils",
-  "version": "3.1.5",
+  "version": "3.1.7",
   "description": "一个 Node & Browser 工具函数集",
-  "main": "./lib/ntils.js",
-  "jsnext:main": "./src/index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -22,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Houfeng/ntils/issues"
   },
-  "homepage": "https://github.com/Houfeng/ntils#readme"
+  "homepage": "https://github.com/Houfeng/ntils#readme",
+  "devDependencies": {
+    "rollup": "^0.50.0"
+  }
 }

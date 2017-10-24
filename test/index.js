@@ -1,3 +1,3 @@
 const utils = require('../');
 
-console.log(utils.isNull(0));
+console.log(Object.keys(utils).join(','));

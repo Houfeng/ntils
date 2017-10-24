@@ -1,57 +1,10 @@
 build:
-  - name: clean
-    target: lib
-  - name: webpack
-    entry: 
-      ntils: ./src/index.js
-    template: '-'
-    output: lib
-    folders:
-      js: '.'
-    common:
-      disabled: true
-    umd:
-      library: '[name]'
-      libraryTarget: 'umd'
-      umdNamedDefine: true
-    babel:
-      useBuiltIns: true
-      transform: false
-    compress: false
-  - name: webpack
-    entry: 
-      ntils-min: ./src/index.js
-    template: '-'
-    output: lib
-    folders:
-      js: '.'
-    common:
-      disabled: true
-    umd:
-      library: '[name]'
-      libraryTarget: 'umd'
-      umdNamedDefine: true
-    babel:
-      useBuiltIns: true
-      transform: false
+  - name: shell
+    script:
+      - ./node_modules/.bin/rollup -i src/index.js -o lib/index.js -f cjs -n ${project.name}
+      - ./node_modules/.bin/rollup -i src/index.js -o dist/${project.name}.js -f umd -n ${project.name}
 
 dev:
-  - name: clean
-    target: lib
-  - name: webpack
-    watch: true
-    entry: 
-      ntils: ./src/index.js
-    template: '-'
-    output: lib
-    folders:
-      js: '.'
-    common:
-      disabled: true
-    umd:
-      library: '[name]'
-      libraryTarget: 'umd'
-      umdNamedDefine: true
-    babel:
-      useBuiltIns: true
-      transform: false
+  - name: shell
+    script:
+      - dn build
