@@ -75,7 +75,6 @@ export function startWith(str1, str2) {
  * @static
  */
 export function contains(str1, str2) {
-  var self = this;
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) > -1;
 };
@@ -257,12 +256,11 @@ export function toArray(array) {
  * @static
  */
 export function toDate(val) {
-  var self = this;
-  if (self.isNumber(val))
+  if (isNumber(val))
     return new Date(val);
-  else if (self.isString(val))
-    return new Date(self.replace(self.replace(val, '-', '/'), 'T', ' '));
-  else if (self.isDate(val))
+  else if (isString(val))
+    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
+  else if (isDate(val))
     return val;
   else
     return null;
@@ -385,11 +383,11 @@ export function clone(src, igonres) {
         objClone[key] = value;
       }
     }
-  }, this);
+  });
   ['toString', 'valueOf'].forEach(function (key) {
     if (contains(igonres, key)) return;
     final(objClone, key, src[key]);
-  }, this);
+  });
   return objClone;
 };
 
@@ -432,7 +430,7 @@ export function mix(dst, src, igonres, mode, igonreNull) {
     } else {
       dst[key] = src[key];
     }
-  }, this);
+  });
   return dst;
 };
 
@@ -526,7 +524,7 @@ export function deepEqual(a, b) {
     if (checkedMap[key]) return;
     if (!deepEqual(a[key], b[key])) result = false;
     checkedMap[key] = true;
-  }, this);
+  });
   return result;
 };
 
@@ -591,7 +589,7 @@ export function setByPath(obj, path, value) {
       obj[name] = obj[name] || {};
       obj = obj[name];
     }
-  }, this);
+  });
 };
 
 /**
@@ -607,7 +605,7 @@ export function getByPath(obj, path) {
   each(path, function (index, name) {
     if (isNull(name) || name.length < 1) return;
     if (!isNull(obj)) obj = obj[name];
-  }, this);
+  });
   return obj;
 };
 

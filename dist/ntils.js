@@ -262,12 +262,11 @@ function toArray(array) {
  * @static
  */
 function toDate(val) {
-  var self = this;
-  if (self.isNumber(val))
+  if (isNumber(val))
     return new Date(val);
-  else if (self.isString(val))
-    return new Date(self.replace(self.replace(val, '-', '/'), 'T', ' '));
-  else if (self.isDate(val))
+  else if (isString(val))
+    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
+  else if (isDate(val))
     return val;
   else
     return null;
@@ -390,11 +389,11 @@ function clone(src, igonres) {
         objClone[key] = value;
       }
     }
-  }, this);
+  });
   ['toString', 'valueOf'].forEach(function (key) {
     if (contains(igonres, key)) return;
     final(objClone, key, src[key]);
-  }, this);
+  });
   return objClone;
 }
 
@@ -437,7 +436,7 @@ function mix(dst, src, igonres, mode, igonreNull) {
     } else {
       dst[key] = src[key];
     }
-  }, this);
+  });
   return dst;
 }
 
@@ -531,7 +530,7 @@ function deepEqual(a, b) {
     if (checkedMap[key]) return;
     if (!deepEqual(a[key], b[key])) result = false;
     checkedMap[key] = true;
-  }, this);
+  });
   return result;
 }
 
@@ -596,7 +595,7 @@ function setByPath(obj, path, value) {
       obj[name] = obj[name] || {};
       obj = obj[name];
     }
-  }, this);
+  });
 }
 
 /**
@@ -612,7 +611,7 @@ function getByPath(obj, path) {
   each(path, function (index, name) {
     if (isNull(name) || name.length < 1) return;
     if (!isNull(obj)) obj = obj[name];
-  }, this);
+  });
   return obj;
 }
 
