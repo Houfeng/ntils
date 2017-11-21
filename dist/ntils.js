@@ -26,8 +26,7 @@ function getType(obj) {
  * @static
  */
 function isNull(obj) {
-  var type = getType(obj);
-  return type === 'Undefined' || type === 'Null';
+  return obj === undefined || obj === null;
 }
 
 /**
