@@ -683,7 +683,7 @@ function short(str, maxLength) {
  * 首字母大写
  */
 function firstUpper(str) {
-  if (isNull(str)) return;
+  if (!isString(str)) return '';
   return str.substring(0, 1).toUpperCase() + str.substring(1);
 }
 
@@ -691,6 +691,7 @@ function firstUpper(str) {
  * 编码正则字符串
  */
 function escapeRegExp(str) {
+  if (!isString(str)) return '';
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
@@ -701,6 +702,7 @@ function escapeRegExp(str) {
   * @return {string} 转换后的字符串
   */
 function toCamelCase(str, mode) {
+  if (!isString(str)) return '';
   if (str) {
     str = str.replace(/\-[a-z0-9]/g, function ($1) {
       return $1.slice(1).toUpperCase()
@@ -718,11 +720,12 @@ function toCamelCase(str, mode) {
  * @return {string} 转换后的字符串
  */
 function toSplitCase(str) {
+  if (!isString(str)) return '';
   if (str) {
     str = str.replace(/([A-Z])/g, '-$1');
     if (str[0] == '-') str = str.slice(1);
   }
-  return str;
+  return str.toLowerCase();
 }
 
 function htmlPrefilter(html) {
