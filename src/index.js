@@ -114,8 +114,33 @@ export var hasProperty = has;
  */
 export function isFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "Function";
+  return typeof obj === "function";
 };
+
+/**
+ * 验证一个对象是否为 AsyncFunction
+ * @method isAsyncFunction
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+export function isAsyncFunction(obj) {
+  if (isNull(obj)) return false;
+  return getType(obj) === "AsyncFunction";
+};
+
+/**
+ * 验证一个对象是否为 GeneratorFunction
+ * @method isGeneratorFunction
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+export function isGeneratorFunction(obj) {
+  if (isNull(obj)) return false;
+  return getType(obj) === "GeneratorFunction";
+};
+
 
 /**
  * 验证一个对象是否为String
