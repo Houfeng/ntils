@@ -14,7 +14,7 @@ function toString(obj) {
 }
 
 function getType(obj) {
-  var str = toString(obj);
+  let str = toString(obj);
   return (/^\[object (.+)\]$/i.exec(str))[1];
 }
 
@@ -41,7 +41,7 @@ function trim(str) {
   if (str.trim) {
     return str.trim();
   } else {
-    return str.replace(/(^[\\s]*)|([\\s]*$)/g, "");
+    return str.replace(/(^[\\s]*)|([\\s]*$)/g, '');
   }
 }
 
@@ -120,7 +120,7 @@ var hasProperty = has;
  */
 function isFunction(obj) {
   if (isNull(obj)) return false;
-  return typeof obj === "function";
+  return typeof obj === 'function';
 }
 
 /**
@@ -132,7 +132,7 @@ function isFunction(obj) {
  */
 function isAsyncFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "AsyncFunction";
+  return getType(obj) === 'AsyncFunction';
 }
 
 /**
@@ -144,7 +144,7 @@ function isAsyncFunction(obj) {
  */
 function isGeneratorFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "GeneratorFunction";
+  return getType(obj) === 'GeneratorFunction';
 }
 
 
@@ -193,7 +193,7 @@ function isBoolean(obj) {
  */
 function isElement(obj) {
   if (isNull(obj)) return false;
-  if (win.Element) {
+  if (window.Element) {
     return obj instanceof Element;
   } else {
     return (obj.tagName && obj.nodeType &&
@@ -223,7 +223,7 @@ function isText(obj) {
  */
 function isObject(obj) {
   if (isNull(obj)) return false;
-  var type = getType(obj);
+  let type = getType(obj);
   return type === 'Object' || type === 'Array';
 }
 
@@ -236,10 +236,10 @@ function isObject(obj) {
  */
 function isArray(obj) {
   if (isNull(obj)) return false;
-  var v1 = getType(obj) === 'Array';
-  var v2 = obj instanceof Array;
-  var v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
-  var v4 = !isString(obj) && isNumber(obj.length) && obj[0];
+  let v1 = getType(obj) === 'Array';
+  let v2 = obj instanceof Array;
+  let v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
+  let v4 = !isString(obj) && isNumber(obj.length) && obj[0];
   return v1 || v2 || v3 || v4;
 }
 
@@ -307,13 +307,13 @@ function toDate(val) {
 function each(list, handler, scope) {
   if (isNull(list) || isNull(handler)) return;
   if (isArray(list)) {
-    var listLength = list.length;
-    for (var i = 0; i < listLength; i++) {
+    let listLength = list.length;
+    for (let i = 0; i < listLength; i++) {
       var rs = handler.call(scope || list[i], i, list[i]);
       if (!isNull(rs)) return rs;
     }
   } else {
-    for (var key in list) {
+    for (let key in list) {
       var rs = handler.call(scope || list[key], key, list[key]);
       if (!isNull(rs)) return rs;
     }
@@ -333,28 +333,28 @@ function formatDate(date, format, dict) {
   if (isNull(format) || isNull(date)) return date;
   date = toDate(date);
   dict = dict || {};
-  var placeholder = {
-    "M+": date.getMonth() + 1, //month
-    "d+": date.getDate(), //day
-    "h+": date.getHours(), //hour
-    "m+": date.getMinutes(), //minute
-    "s+": date.getSeconds(), //second
-    "w+": date.getDay(), //week
-    "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
-    "S": date.getMilliseconds() //millisecond
+  let placeholder = {
+    'M+': date.getMonth() + 1, //month
+    'd+': date.getDate(), //day
+    'h+': date.getHours(), //hour
+    'm+': date.getMinutes(), //minute
+    's+': date.getSeconds(), //second
+    'w+': date.getDay(), //week
+    'q+': Math.floor((date.getMonth() + 3) / 3), //quarter
+    'S': date.getMilliseconds() //millisecond
   };
   if (/(y+)/.test(format)) {
     format = format.replace(
       RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
     );
   }
-  for (var key in placeholder) {
-    if (new RegExp("(" + key + ")").test(format)) {
-      var value = placeholder[key];
+  for (let key in placeholder) {
+    if (new RegExp('(' + key + ')').test(format)) {
+      let value = placeholder[key];
       value = dict[value] || value;
       format = format.replace(RegExp.$1, RegExp.$1.length == 1
-        ? value : ("00" + value).substr(("" + value).length));
+        ? value : ('00' + value).substr(('' + value).length));
     }
   }
   return format;
@@ -401,7 +401,7 @@ function clone(src, igonres) {
     isDate(src)) {
     return src;
   }
-  var objClone = src;
+  let objClone = src;
   try {
     objClone = new src.constructor();
   } catch (ex) { }
@@ -484,7 +484,7 @@ function final(obj, name, value) {
         throw new Error('Cannot assign to final property:' + name);
       },
       enumerable: false, //不能枚举
-      configurable: false, //不能重写定义
+      configurable: false //不能重写定义
     });
   } catch (err) {
     obj[name] = value;
@@ -496,7 +496,7 @@ function final(obj, name, value) {
  */
 function keys(obj) {
   if (Object.keys) return Object.keys(obj);
-  var keys = [];
+  let keys = [];
   each(obj, function (key) {
     keys.push(key);
   });
@@ -510,7 +510,7 @@ function create(proto, props) {
   if (Object.create) return Object.create(proto, props);
   function Cotr() { }
   Cotr.prototype = proto;
-  var obj = new Cotr();
+  let obj = new Cotr();
   if (props) copy(props, obj);
   return obj;
 }
@@ -544,12 +544,12 @@ function getPrototypeOf(obj) {
 function deepEqual(a, b) {
   if (a === b) return true;
   if (!isObject(a) || !isObject(b)) return false;
-  var aKeys = keys(a);
-  var bKeys = keys(b);
+  let aKeys = keys(a);
+  let bKeys = keys(b);
   if (aKeys.length !== bKeys.length) return false;
-  var allKeys = aKeys.concat(bKeys);
-  var checkedMap = create(null);
-  var result = true;
+  let allKeys = aKeys.concat(bKeys);
+  let checkedMap = create(null);
+  let result = true;
   each(allKeys, function (i, key) {
     if (checkedMap[key]) return;
     if (!deepEqual(a[key], b[key])) result = false;
@@ -586,15 +586,15 @@ function newGuid() {
   function s4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   }
-  return (s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-    s4() + "-" + s4() + s4() + s4());
+  return (s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4());
 }
 
 /**
  * 对象变换
  **/
 function map(list, fn) {
-  var buffer = isArray(list) ? [] : {};
+  let buffer = isArray(list) ? [] : {};
   each(list, function (name, value) {
     buffer[name] = fn(name, value);
   });
@@ -644,7 +644,7 @@ function getByPath(obj, path) {
  **/
 function unique(array) {
   if (isNull(array)) return array;
-  var newArray = [];
+  let newArray = [];
   each(array, function (i, value) {
     if (newArray.indexOf(value) > -1) return;
     newArray.push(value);
@@ -657,8 +657,8 @@ function unique(array) {
  **/
 function getFunctionArgumentNames(fn) {
   if (!fn) return [];
-  var src = fn.toString();
-  var parts = src.split(')')[0].split('=>')[0].split('(');
+  let src = fn.toString();
+  let parts = src.split(')')[0].split('=>')[0].split('(');
   return (parts[1] || parts[0]).split(',').map(function (name) {
     return trim(name);
   }).filter(function (name) {
@@ -672,8 +672,8 @@ function getFunctionArgumentNames(fn) {
 function short(str, maxLength) {
   if (!str) return str;
   maxLength = maxLength || 40;
-  var strLength = str.length;
-  var trimLength = maxLength / 2;
+  let strLength = str.length;
+  let trimLength = maxLength / 2;
   return strLength > maxLength ?
     str.substr(0, trimLength) + '...' + str.substr(strLength - trimLength) :
     str;
@@ -705,7 +705,7 @@ function toCamelCase(str, mode) {
   if (!isString(str)) return '';
   if (str) {
     str = str.replace(/\-[a-z0-9]/g, function ($1) {
-      return $1.slice(1).toUpperCase()
+      return $1.slice(1).toUpperCase();
     });
     str = str.replace(/^[a-z]/i, function ($1) {
       return mode ? $1.toUpperCase() : $1.toLowerCase();
@@ -729,8 +729,8 @@ function toSplitCase(str) {
 }
 
 function htmlPrefilter(html) {
-  var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-  return html.replace(rxhtmlTag, "<$1></$2>");
+  let rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+  return html.replace(rxhtmlTag, '<$1></$2>');
 }
 
 /**
@@ -740,13 +740,13 @@ function htmlPrefilter(html) {
  */
 function parseHTML(str) {
   str = str || ' ';
-  var parent = document.createElement('div');
+  let parent = document.createElement('div');
   parent.innerHTML = htmlPrefilter(trim(str));
-  var childNodes = toArray(parent.childNodes);
+  let childNodes = toArray(parent.childNodes);
   //先 clone 一份再通过 innerHTML 清空
   //否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
   // if (firstNode) firstNode = firstNode.cloneNode(true);
-  // win._NPH_.innerHTML = '';
+  // window._NPH_.innerHTML = '';
   each(childNodes, function (index, childNode) {
     parent.removeChild(childNode);
   });

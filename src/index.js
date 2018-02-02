@@ -1,14 +1,14 @@
 /**
  * 空函数
  */
-export function noop() { };
+export function noop() { }
 
 export function toString(obj) {
   return Object.prototype.toString.call(obj);
 }
 
 export function getType(obj) {
-  var str = toString(obj);
+  let str = toString(obj);
   return (/^\[object (.+)\]$/i.exec(str))[1];
 }
 
@@ -21,7 +21,7 @@ export function getType(obj) {
  */
 export function isNull(obj) {
   return obj === undefined || obj === null;
-};
+}
 
 /**
  * 除去字符串两端的空格
@@ -35,9 +35,9 @@ export function trim(str) {
   if (str.trim) {
     return str.trim();
   } else {
-    return str.replace(/(^[\\s]*)|([\\s]*$)/g, "");
+    return str.replace(/(^[\\s]*)|([\\s]*$)/g, '');
   }
-};
+}
 
 /**
  * 替换所有
@@ -50,7 +50,7 @@ export function trim(str) {
 export function replace(str, str1, str2) {
   if (isNull(str)) return str;
   return str.replace(new RegExp(str1, 'g'), str2);
-};
+}
 
 /**
  * 从字符串开头匹配
@@ -63,7 +63,7 @@ export function replace(str, str1, str2) {
 export function startWith(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) === 0;
-};
+}
 
 /**
  * 是否包含
@@ -76,7 +76,7 @@ export function startWith(str1, str2) {
 export function contains(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) > -1;
-};
+}
 
 /**
  * 从字符串结束匹配
@@ -89,7 +89,7 @@ export function contains(str1, str2) {
 export function endWith(str1, str2) {
   if (isNull(str1) || isNull(str2)) return false;
   return str1.indexOf(str2) === (str1.length - str2.length);
-};
+}
 
 /**
  * 是否包含属性
@@ -102,7 +102,7 @@ export function endWith(str1, str2) {
 export function has(obj, name) {
   if (isNull(obj) || isNull(name)) return false;
   return (name in obj) || (obj.hasOwnProperty(name));
-};
+}
 export var hasProperty = has;
 
 /**
@@ -114,8 +114,8 @@ export var hasProperty = has;
  */
 export function isFunction(obj) {
   if (isNull(obj)) return false;
-  return typeof obj === "function";
-};
+  return typeof obj === 'function';
+}
 
 /**
  * 验证一个对象是否为 AsyncFunction
@@ -126,8 +126,8 @@ export function isFunction(obj) {
  */
 export function isAsyncFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "AsyncFunction";
-};
+  return getType(obj) === 'AsyncFunction';
+}
 
 /**
  * 验证一个对象是否为 GeneratorFunction
@@ -138,8 +138,8 @@ export function isAsyncFunction(obj) {
  */
 export function isGeneratorFunction(obj) {
   if (isNull(obj)) return false;
-  return getType(obj) === "GeneratorFunction";
-};
+  return getType(obj) === 'GeneratorFunction';
+}
 
 
 /**
@@ -152,7 +152,7 @@ export function isGeneratorFunction(obj) {
 export function isString(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'String';
-};
+}
 
 /**
  * 验证一个对象是否为Number
@@ -164,7 +164,7 @@ export function isString(obj) {
 export function isNumber(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'Number';
-};
+}
 
 /**
  * 验证一个对象是否为Boolean
@@ -176,7 +176,7 @@ export function isNumber(obj) {
 export function isBoolean(obj) {
   if (isNull(obj)) return false;
   return getType(obj) === 'Boolean';
-};
+}
 
 /**
  * 验证一个对象是否为HTML Element
@@ -187,14 +187,14 @@ export function isBoolean(obj) {
  */
 export function isElement(obj) {
   if (isNull(obj)) return false;
-  if (win.Element) {
+  if (window.Element) {
     return obj instanceof Element;
   } else {
     return (obj.tagName && obj.nodeType &&
       obj.nodeName && obj.attributes &&
       obj.ownerDocument);
   }
-};
+}
 
 /**
  * 验证一个对象是否为HTML Text Element
@@ -206,7 +206,7 @@ export function isElement(obj) {
 export function isText(obj) {
   if (isNull(obj)) return false;
   return obj instanceof Text;
-};
+}
 
 /**
  * 验证一个对象是否为Object
@@ -217,9 +217,9 @@ export function isText(obj) {
  */
 export function isObject(obj) {
   if (isNull(obj)) return false;
-  var type = getType(obj);
+  let type = getType(obj);
   return type === 'Object' || type === 'Array';
-};
+}
 
 /**
  * 验证一个对象是否为Array或伪Array
@@ -230,12 +230,12 @@ export function isObject(obj) {
  */
 export function isArray(obj) {
   if (isNull(obj)) return false;
-  var v1 = getType(obj) === 'Array';
-  var v2 = obj instanceof Array;
-  var v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
-  var v4 = !isString(obj) && isNumber(obj.length) && obj[0];
+  let v1 = getType(obj) === 'Array';
+  let v2 = obj instanceof Array;
+  let v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
+  let v4 = !isString(obj) && isNumber(obj.length) && obj[0];
   return v1 || v2 || v3 || v4;
-};
+}
 
 /**
  * 验证是不是一个日期对象
@@ -247,7 +247,7 @@ export function isArray(obj) {
 export function isDate(val) {
   if (isNull(val)) return false;
   return val instanceof Date;
-};
+}
 
 /**
  * 验证是不是一个正则对象
@@ -258,7 +258,7 @@ export function isDate(val) {
  */
 export function isRegexp(val) {
   return val instanceof RegExp;
-};
+}
 
 /**
  * 转换为数组
@@ -270,7 +270,7 @@ export function isRegexp(val) {
 export function toArray(array) {
   if (isNull(array)) return [];
   return Array.prototype.slice.call(array);
-};
+}
 
 /**
  * 转为日期格式
@@ -288,7 +288,7 @@ export function toDate(val) {
     return val;
   else
     return null;
-};
+}
 
 /**
  * 遍历一个对像或数组
@@ -301,18 +301,18 @@ export function toDate(val) {
 export function each(list, handler, scope) {
   if (isNull(list) || isNull(handler)) return;
   if (isArray(list)) {
-    var listLength = list.length;
-    for (var i = 0; i < listLength; i++) {
+    let listLength = list.length;
+    for (let i = 0; i < listLength; i++) {
       var rs = handler.call(scope || list[i], i, list[i]);
       if (!isNull(rs)) return rs;
     }
   } else {
-    for (var key in list) {
+    for (let key in list) {
       var rs = handler.call(scope || list[key], key, list[key]);
       if (!isNull(rs)) return rs;
     }
   }
-};
+}
 
 /**
  * 格式化日期
@@ -327,32 +327,32 @@ export function formatDate(date, format, dict) {
   if (isNull(format) || isNull(date)) return date;
   date = toDate(date);
   dict = dict || {};
-  var placeholder = {
-    "M+": date.getMonth() + 1, //month
-    "d+": date.getDate(), //day
-    "h+": date.getHours(), //hour
-    "m+": date.getMinutes(), //minute
-    "s+": date.getSeconds(), //second
-    "w+": date.getDay(), //week
-    "q+": Math.floor((date.getMonth() + 3) / 3), //quarter
-    "S": date.getMilliseconds() //millisecond
-  }
+  let placeholder = {
+    'M+': date.getMonth() + 1, //month
+    'd+': date.getDate(), //day
+    'h+': date.getHours(), //hour
+    'm+': date.getMinutes(), //minute
+    's+': date.getSeconds(), //second
+    'w+': date.getDay(), //week
+    'q+': Math.floor((date.getMonth() + 3) / 3), //quarter
+    'S': date.getMilliseconds() //millisecond
+  };
   if (/(y+)/.test(format)) {
     format = format.replace(
       RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+      (date.getFullYear() + '').substr(4 - RegExp.$1.length)
     );
   }
-  for (var key in placeholder) {
-    if (new RegExp("(" + key + ")").test(format)) {
-      var value = placeholder[key];
+  for (let key in placeholder) {
+    if (new RegExp('(' + key + ')').test(format)) {
+      let value = placeholder[key];
       value = dict[value] || value;
       format = format.replace(RegExp.$1, RegExp.$1.length == 1
-        ? value : ("00" + value).substr(("" + value).length));
+        ? value : ('00' + value).substr(('' + value).length));
     }
   }
   return format;
-};
+}
 
 /**
  * 拷贝对象
@@ -376,9 +376,9 @@ export function copy(src, dst, igonres) {
     } else {
       dst[key] = src[key];
     }
-  })
+  });
   return dst;
-};
+}
 
 /**
  * 深度克隆对象
@@ -395,7 +395,7 @@ export function clone(src, igonres) {
     isDate(src)) {
     return src;
   }
-  var objClone = src;
+  let objClone = src;
   try {
     objClone = new src.constructor();
   } catch (ex) { }
@@ -413,7 +413,7 @@ export function clone(src, igonres) {
     final(objClone, key, src[key]);
   });
   return objClone;
-};
+}
 
 /**
  * 合并对象
@@ -456,7 +456,7 @@ export function mix(dst, src, igonres, mode, igonreNull) {
     }
   });
   return dst;
-};
+}
 
 /**
  * 定义不可遍历的属性
@@ -478,36 +478,36 @@ export function final(obj, name, value) {
         throw new Error('Cannot assign to final property:' + name);
       },
       enumerable: false, //不能枚举
-      configurable: false, //不能重写定义
+      configurable: false //不能重写定义
     });
   } catch (err) {
     obj[name] = value;
   }
-};
+}
 
 /**
  * 获取所有 key 
  */
 export function keys(obj) {
   if (Object.keys) return Object.keys(obj);
-  var keys = [];
+  let keys = [];
   each(obj, function (key) {
     keys.push(key);
   });
   return keys;
-};
+}
 
 /**
  * 创建一个对象
  */
 export function create(proto, props) {
   if (Object.create) return Object.create(proto, props);
-  function Cotr() { };
+  function Cotr() { }
   Cotr.prototype = proto;
-  var obj = new Cotr();
+  let obj = new Cotr();
   if (props) copy(props, obj);
   return obj;
-};
+}
 
 /**
  * 设置 proto
@@ -521,7 +521,7 @@ export function setPrototypeOf(obj, proto) {
     if (!('__proto__' in Object)) copy(proto, obj);
     obj.__proto__ = proto;
   }
-};
+}
 
 /**
  * 获取 proto
@@ -530,7 +530,7 @@ export function getPrototypeOf(obj) {
   if (obj.__proto__) return obj.__proto__;
   if (Object.getPrototypeOf) return Object.getPrototypeOf(obj);
   if (obj.constructor) return obj.constructor.prototype;
-};
+}
 
 /**
  * 是否深度相等
@@ -538,19 +538,19 @@ export function getPrototypeOf(obj) {
 export function deepEqual(a, b) {
   if (a === b) return true;
   if (!isObject(a) || !isObject(b)) return false;
-  var aKeys = keys(a);
-  var bKeys = keys(b);
+  let aKeys = keys(a);
+  let bKeys = keys(b);
   if (aKeys.length !== bKeys.length) return false;
-  var allKeys = aKeys.concat(bKeys);
-  var checkedMap = create(null);
-  var result = true;
+  let allKeys = aKeys.concat(bKeys);
+  let checkedMap = create(null);
+  let result = true;
   each(allKeys, function (i, key) {
     if (checkedMap[key]) return;
     if (!deepEqual(a[key], b[key])) result = false;
     checkedMap[key] = true;
   });
   return result;
-};
+}
 
 /**
  * 从一个数值循环到别一个数
@@ -568,7 +568,7 @@ export function fromTo(fromNum, toNum, step, handler) {
   } else {
     for (var i = fromNum; i >= toNum; i -= step) handler(i);
   }
-};
+}
 
 /**
  * 生成一个Guid
@@ -579,21 +579,21 @@ export function fromTo(fromNum, toNum, step, handler) {
 export function newGuid() {
   function s4() {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-  };
-  return (s4() + s4() + "-" + s4() + "-" + s4() + "-" +
-    s4() + "-" + s4() + s4() + s4());
-};
+  }
+  return (s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4());
+}
 
 /**
  * 对象变换
  **/
 export function map(list, fn) {
-  var buffer = isArray(list) ? [] : {};
+  let buffer = isArray(list) ? [] : {};
   each(list, function (name, value) {
     buffer[name] = fn(name, value);
   });
   return buffer;
-};
+}
 
 /**
  * 通过路径设置属性值
@@ -614,7 +614,7 @@ export function setByPath(obj, path, value) {
       obj = obj[name];
     }
   });
-};
+}
 
 /**
  * 通过路径获取属性值
@@ -631,34 +631,34 @@ export function getByPath(obj, path) {
     if (!isNull(obj)) obj = obj[name];
   });
   return obj;
-};
+}
 
 /**
  * 数组去重
  **/
 export function unique(array) {
   if (isNull(array)) return array;
-  var newArray = [];
+  let newArray = [];
   each(array, function (i, value) {
     if (newArray.indexOf(value) > -1) return;
     newArray.push(value);
   });
   return newArray;
-};
+}
 
 /**
  * 解析 function 的参数列表
  **/
 export function getFunctionArgumentNames(fn) {
   if (!fn) return [];
-  var src = fn.toString();
-  var parts = src.split(')')[0].split('=>')[0].split('(');
+  let src = fn.toString();
+  let parts = src.split(')')[0].split('=>')[0].split('(');
   return (parts[1] || parts[0]).split(',').map(function (name) {
     return trim(name);
   }).filter(function (name) {
     return name != 'function';
   });
-};
+}
 
 /**
  * 缩短字符串
@@ -666,12 +666,12 @@ export function getFunctionArgumentNames(fn) {
 export function short(str, maxLength) {
   if (!str) return str;
   maxLength = maxLength || 40;
-  var strLength = str.length;
-  var trimLength = maxLength / 2;
+  let strLength = str.length;
+  let trimLength = maxLength / 2;
   return strLength > maxLength ?
     str.substr(0, trimLength) + '...' + str.substr(strLength - trimLength) :
     str;
-};
+}
 
 /**
  * 首字母大写
@@ -679,7 +679,7 @@ export function short(str, maxLength) {
 export function firstUpper(str) {
   if (!isString(str)) return '';
   return str.substring(0, 1).toUpperCase() + str.substring(1);
-};
+}
 
 /**
  * 编码正则字符串
@@ -687,7 +687,7 @@ export function firstUpper(str) {
 export function escapeRegExp(str) {
   if (!isString(str)) return '';
   return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-};
+}
 
 /**
   * 将字符串转成「驼峰」式
@@ -699,7 +699,7 @@ export function toCamelCase(str, mode) {
   if (!isString(str)) return '';
   if (str) {
     str = str.replace(/\-[a-z0-9]/g, function ($1) {
-      return $1.slice(1).toUpperCase()
+      return $1.slice(1).toUpperCase();
     });
     str = str.replace(/^[a-z]/i, function ($1) {
       return mode ? $1.toUpperCase() : $1.toLowerCase();
@@ -723,8 +723,8 @@ export function toSplitCase(str) {
 }
 
 export function htmlPrefilter(html) {
-  var rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-  return html.replace(rxhtmlTag, "<$1></$2>");
+  let rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+  return html.replace(rxhtmlTag, '<$1></$2>');
 }
 
 /**
@@ -734,15 +734,15 @@ export function htmlPrefilter(html) {
  */
 export function parseHTML(str) {
   str = str || ' ';
-  var parent = document.createElement('div');
+  let parent = document.createElement('div');
   parent.innerHTML = htmlPrefilter(trim(str));
-  var childNodes = toArray(parent.childNodes);
+  let childNodes = toArray(parent.childNodes);
   //先 clone 一份再通过 innerHTML 清空
   //否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
   // if (firstNode) firstNode = firstNode.cloneNode(true);
-  // win._NPH_.innerHTML = '';
+  // window._NPH_.innerHTML = '';
   each(childNodes, function (index, childNode) {
     parent.removeChild(childNode);
   });
   return childNodes;
-};
+}
