@@ -626,8 +626,8 @@ export function getByPath(obj, path, filter) {
   }
   each(path, function (index, name) {
     if (isNull(name) || name.length < 1) return;
-    const value = obj[name];
-    if (!isNull(obj)) obj = !filter || filter(value) !== false ? value : null;
+    const value = filter ? filter(obj[name]) : obj[name];
+    if (!isNull(obj)) obj = value;
   });
   return obj;
 }
