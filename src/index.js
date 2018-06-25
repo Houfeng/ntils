@@ -619,16 +619,15 @@ export function setByPath(obj, path, value) {
 /**
  * 通过路径获取属性值
  */
-export function getByPath(obj, path) {
-  if (isNull(obj) || isNull(path) || path === '') {
-    return obj;
-  }
+export function getByPath(obj, path, filter) {
+  if (isNull(obj) || isNull(path) || path === '') return obj;
   if (!isArray(path)) {
     path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
   }
   each(path, function (index, name) {
     if (isNull(name) || name.length < 1) return;
-    if (!isNull(obj)) obj = obj[name];
+    const value = obj[name];
+    if (!isNull(obj)) obj = !filter || filter(value) !== false ? value : null;
   });
   return obj;
 }
