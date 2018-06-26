@@ -625,9 +625,8 @@ export function getByPath(obj, path, filter) {
     path = path.replace(/\[/, '.').replace(/\]/, '.').split('.');
   }
   each(path, function (index, name) {
-    if (isNull(name) || name.length < 1) return;
-    const value = filter ? filter(obj[name], name, obj) : obj[name];
-    if (!isNull(obj)) obj = value;
+    if (isNull(obj) || isNull(name) || name.length < 1) return;
+    obj = filter ? filter(obj[name], name, obj) : obj[name];
   });
   return obj;
 }
