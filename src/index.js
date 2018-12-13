@@ -238,6 +238,17 @@ export function isArray(obj) {
 }
 
 /**
+ * 验证一个对象是否为typed array
+ * @method isTypedArray
+ * @param  {Object}  obj 要验证的对象
+ * @return {Boolean}     结果
+ * @static
+ */
+export function isTypedArray(obj){
+  return ArrayBuffer.isView(obj) && !(obj instanceof DataView)
+}
+
+/**
  * 验证是不是一个日期对象
  * @method isDate
  * @param {Object} val   要检查的对象
