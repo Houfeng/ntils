@@ -406,6 +406,9 @@ export function clone(src, igonres) {
     isDate(src)) {
     return src;
   }
+  if(isTypedArray(src)){
+    return src.slice();
+  }
   let objClone = src;
   try {
     objClone = new src.constructor();
