@@ -280,14 +280,19 @@ export function toArray(array) {
  * @static
  */
 export function toDate(val) {
-  if (isNumber(val))
+  if (isNumber(val)) {
     return new Date(val);
-  else if (isString(val))
+  } else if (isString(val)) {
     return new Date(replace(replace(val, '-', '/'), 'T', ' '));
-  else if (isDate(val))
+  } else if (isDate(val)) {
     return val;
-  else
+  } else if (isFunction(val)) {
+    return val();
+  } else if (isFunctionString(val)) {
+    return toFunction(val)();
+  } else {
     return null;
+  }
 }
 
 /**
@@ -656,6 +661,20 @@ export function getFunctionArgumentNames(fn) {
   }).filter(function (name) {
     return name != 'function';
   });
+}
+
+const FUNC_REGEXP = /^function\s*\(([\s\S]*?)\)\s*\{([\s\S]*?)\}$/i;
+
+export function isFunctionString(str) {
+  return FUNC_REGEXP.test(str);
+}
+
+export function toFunction(str) {
+  const info = FUNC_REGEXP.exec(str);
+  if (!info || info.length < 3) return;
+  const params = info[1].split(',').filter(p => !!p).map(p => p.trim());
+  const body = info[2];
+  return new Function(...params, body);
 }
 
 /**
