@@ -244,8 +244,8 @@ export function isArray(obj) {
  * @return {Boolean}     结果
  * @static
  */
-export function isTypedArray(obj){
-  return ArrayBuffer.isView(obj) && !(obj instanceof DataView)
+export function isTypedArray(obj) {
+  return ArrayBuffer.isView(obj) && !(obj instanceof DataView);
 }
 
 /**
@@ -293,14 +293,14 @@ export function toArray(array) {
 export function toDate(val) {
   if (isNumber(val)) {
     return new Date(val);
-  } else if (isString(val)) {
-    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
   } else if (isDate(val)) {
     return val;
   } else if (isFunction(val)) {
     return val();
   } else if (isFunctionString(val)) {
     return toFunction(val)();
+  } else if (isString(val)) {
+    return new Date(replace(replace(val, '-', '/'), 'T', ' '));
   } else {
     return null;
   }
@@ -411,7 +411,7 @@ export function clone(src, igonres) {
     isDate(src)) {
     return src;
   }
-  if(isTypedArray(src)){
+  if (isTypedArray(src)) {
     return src.slice();
   }
   let objClone = src;
