@@ -296,9 +296,9 @@ export function toDate(val) {
   } else if (isDate(val)) {
     return val;
   } else if (isFunction(val)) {
-    return val();
+    return new Date(val());
   } else if (isFunctionString(val)) {
-    return toFunction(val)();
+    return new Date(toFunction(val)());
   } else if (isString(val)) {
     return new Date(replace(replace(val, '-', '/'), 'T', ' '));
   } else {
