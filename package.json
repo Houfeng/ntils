@@ -1,6 +1,6 @@
 {
   "name": "ntils",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "一个 Node & Browser 工具函数集",
   "main": "./lib/index.js",
   "scripts": {
@@ -23,8 +23,12 @@
   },
   "homepage": "https://github.com/Houfeng/ntils#readme",
   "devDependencies": {
+    "@types/node": "^12.0.0",
     "dn-middleware-lint": "^2.1.4",
     "dn-middleware-shell": "^1.1.0",
     "typescript": "^2.7.1"
+  },
+  "dependencies": {
+    "dify": "^1.0.2"
   }
 }
