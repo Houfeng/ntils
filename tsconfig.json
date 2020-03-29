@@ -13,13 +13,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "esModuleInterop": true,
+    "removeComments": true,
     "lib": [
       "dom",
       "es2017"
     ]
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.ts"
   ]
 }

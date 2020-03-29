@@ -18,7 +18,11 @@ build:
       - rollup ./dist/es.js -o ./dist/umd.js -f umd -n ntils
       - rollup ./dist/es.js -o ./dist/iife.js -f iife -n ntils
 
-dev:
+publish:
+  - name: version
   - name: shell
     script:
+      - dn test
       - dn build
+      - npm pu --registry=http://registry.npmjs.org
+  - name: submitter
