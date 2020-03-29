@@ -1,6 +1,6 @@
 {
   "name": "ntils",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "一个 Node & Browser 工具函数集",
   "main": "./dist/cjs.js",
   "module": "./dist/es.js",
