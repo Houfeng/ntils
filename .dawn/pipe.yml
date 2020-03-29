@@ -1,7 +1,22 @@
+test:
+  - name: clean
+    target:
+      - dist
+      - types
+  - name: tslint
+
 build:
+  - name: clean
+    target:
+      - dist
+      - types
   - name: shell
     script:
       - tsc --locale zh-CN 
+      - mv ./dist/index.js ./dist/es.js
+      - rollup ./dist/es.js -o ./dist/cjs.js -f cjs
+      - rollup ./dist/es.js -o ./dist/umd.js -f umd -n ntils
+      - rollup ./dist/es.js -o ./dist/iife.js -f iife -n ntils
 
 dev:
   - name: shell

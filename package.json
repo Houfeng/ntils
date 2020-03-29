@@ -1,8 +1,10 @@
 {
   "name": "ntils",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "一个 Node & Browser 工具函数集",
-  "main": "./lib/index.js",
+  "main": "./dist/cjs.js",
+  "module": "./dist/es.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "test": "mocha"
   },
@@ -13,7 +15,6 @@
   "keywords": [
     "utils",
     "util",
-    "lodash",
     "ntils"
   ],
   "author": "Houfeng",
@@ -24,11 +25,14 @@
   "homepage": "https://github.com/Houfeng/ntils#readme",
   "devDependencies": {
     "@types/node": "^12.0.0",
+    "dn-middleware-clean": "^1.0.2",
+    "dn-middleware-copy": "^0.2.7",
     "dn-middleware-lint": "^2.1.4",
     "dn-middleware-shell": "^1.1.0",
-    "typescript": "^2.7.1"
+    "dn-middleware-tslint": "^1.1.3",
+    "dn-middleware-unit": "^0.2.1",
+    "rollup": "^2.2.0",
+    "typescript": "^3.7.5"
   },
-  "dependencies": {
-    "dify": "^1.0.2"
-  }
+  "dependencies": {}
 }
