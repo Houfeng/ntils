@@ -1,4 +1,4 @@
-export function noop() {}
+export function noop() { }
 
 export function toString(obj: any) {
   return Object.prototype.toString.call(obj);
@@ -244,7 +244,7 @@ export function formatDate(
   return format;
 }
 
-export function copy(src: any, dst: any, igonres?: string[]) {
+export function copy(src: any, dst?: any, igonres?: string[]) {
   dst = dst || (isArray(src) ? [] : {});
   Object.keys(src).forEach((key: string) => {
     if (igonres && igonres.indexOf(key) > -1) return;
