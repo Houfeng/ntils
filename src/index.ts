@@ -285,7 +285,8 @@ export function clone(src: any, igonres?: string[]) {
   } catch {
     objClone = {};
   }
-  Object.entries(src).forEach(([key, value]) => {
+  Object.keys(src).forEach(key => {
+    const value = src[key];
     if (objClone[key] !== value && !igonres.includes(key)) {
       if (isObject(value)) {
         objClone[key] = clone(value, igonres);
@@ -355,7 +356,8 @@ export function mix(
 export function final(obj: any, name: string, value: any): void {
   if (arguments.length === 0) throw new Error("Parameter missing");
   if (arguments.length === 1) {
-    return Object.entries(obj).forEach(([name, value]) => {
+    return Object.keys(obj).forEach(name => {
+      const value = obj[name];
       final(obj, name, value);
     });
   }
