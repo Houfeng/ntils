@@ -244,6 +244,26 @@ export function formatDate(
   return format;
 }
 
+export function each(
+  list: any,
+  handler: (key: string | number, value: any) => any,
+  scope: any
+) {
+  if (isNull(list) || isNull(handler)) return;
+  if (isArray(list)) {
+    const listLength = list.length;
+    for (let i = 0; i < listLength; i++) {
+      const rs = handler.call(scope || list[i], i, list[i]);
+      if (!isNull(rs)) return rs;
+    }
+  } else {
+    for (let key in list) {
+      const rs = handler.call(scope || list[key], key, list[key]);
+      if (!isNull(rs)) return rs;
+    }
+  }
+}
+
 export function copy(src: any, dst?: any, igonres?: string[]) {
   dst = dst || (isArray(src) ? [] : {});
   Object.keys(src).forEach((key: string) => {
