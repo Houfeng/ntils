@@ -1,115 +1,115 @@
 export function noop() {}
 
-export function toString(obj: any) {
-  return Object.prototype.toString.call(obj);
+export function toString(value: any) {
+  return Object.prototype.toString.call(value);
 }
 
-export function getType(obj: any) {
-  let str = toString(obj);
+export function getType(value: any) {
+  let str = toString(value);
   return /^\[object (.+)\]$/i.exec(str)[1];
 }
 
 /**
  * 验证一个对象是否为NULL
  * @method isNull
- * @param  {Object}  obj 要验证的对象
- * @return {Boolean}     结果
+ * @param  {Object}  value 要验证的对象
+ * @return {Boolean}       结果
  * @static
  */
-export function isNull(obj: any) {
-  return obj === undefined || obj === null;
+export function isNull(value: any): value is null {
+  return value === undefined || value === null;
 }
 
 /**
  * 验证一个对象是否为Function
  * @method isFunction
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isFunction(obj: any) {
-  if (isNull(obj)) return false;
-  return typeof obj === "function";
+export function isFunction(value: any): value is Function {
+  if (isNull(value)) return false;
+  return typeof value === "function";
 }
 
 /**
  * 验证一个对象是否为 AsyncFunction
  * @method isAsyncFunction
- * @param  {Object}  obj 要验证的对象
- * @return {Boolean}     结果
+ * @param  {Object}  value 要验证的对象
+ * @return {Boolean}       结果
  * @static
  */
-export function isAsyncFunction(obj: any) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "AsyncFunction";
+export function isAsyncFunction(value: any): value is Function {
+  if (isNull(value)) return false;
+  return getType(value) === "AsyncFunction";
 }
 
 /**
  * 验证一个对象是否为 GeneratorFunction
  * @method isGeneratorFunction
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isGeneratorFunction(obj: any) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "GeneratorFunction";
+export function isGeneratorFunction(value: any): value is GeneratorFunction {
+  if (isNull(value)) return false;
+  return getType(value) === "GeneratorFunction";
 }
 
 /**
  * 验证一个对象是否为String
  * @method isString
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isString(obj: any) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "String";
+export function isString(value: any): value is string {
+  if (isNull(value)) return false;
+  return getType(value) === "String";
 }
 
 /**
  * 验证一个对象是否为Number
  * @method isNumber
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isNumber(obj: any) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "Number";
+export function isNumber(value: any): value is number {
+  if (isNull(value)) return false;
+  return getType(value) === "Number";
 }
 
 /**
  * 验证一个对象是否为Boolean
  * @method isBoolean
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isBoolean(obj: any) {
-  if (isNull(obj)) return false;
-  return getType(obj) === "Boolean";
+export function isBoolean(value: any): value is boolean {
+  if (isNull(value)) return false;
+  return getType(value) === "Boolean";
 }
 
 /**
  * 验证一个对象是否为HTML Element
  * @method isElement
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isElement(obj: any) {
-  if (isNull(obj)) return false;
+export function isElement(value: any): value is Element {
+  if (isNull(value)) return false;
   if (typeof Element !== "undefined") {
-    return obj instanceof Element;
+    return value instanceof Element;
   } else {
     return (
-      obj.tagName &&
-      obj.nodeType &&
-      obj.nodeName &&
-      obj.attributes &&
-      obj.ownerDocument
+      value.tagName &&
+      value.nodeType &&
+      value.nodeName &&
+      value.attributes &&
+      value.ownerDocument
     );
   }
 }
@@ -117,69 +117,70 @@ export function isElement(obj: any) {
 /**
  * 验证一个对象是否为HTML Text Element
  * @method isText
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isText(obj: any) {
-  if (isNull(obj)) return false;
-  return obj instanceof Text;
+export function isText(value: any): value is Text {
+  if (isNull(value)) return false;
+  return value instanceof Text;
 }
 
 /**
  * 验证一个对象是否为Object
  * @method isObject
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isObject(obj: any) {
-  if (isNull(obj)) return false;
-  const type = getType(obj);
+export function isObject(value: any): value is object {
+  if (isNull(value)) return false;
+  const type = getType(value);
   return type === "Object" || type === "Array";
 }
 
 /**
  * 验证一个对象是否为Array或伪Array
  * @method isArray
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isArray(obj: any): boolean {
-  if (isNull(obj)) return false;
-  const v1 = getType(obj) === "Array";
-  const v2 = obj instanceof Array;
-  const v3 = !isString(obj) && isNumber(obj.length) && isFunction(obj.splice);
-  const v4 = !isString(obj) && isNumber(obj.length) && obj[0];
+export function isArray(value: any): value is any[] {
+  if (isNull(value)) return false;
+  const v1 = getType(value) === "Array";
+  const v2 = value instanceof Array;
+  const v3 =
+    !isString(value) && isNumber(value.length) && isFunction(value.splice);
+  const v4 = !isString(value) && isNumber(value.length) && value[0];
   return v1 || v2 || v3 || v4;
 }
 
 /**
  * 验证一个对象是否为typed array
  * @method isTypedArray
- * @param  {Object}  obj 要验证的对象
+ * @param  {Object}  value 要验证的对象
  * @return {Boolean}     结果
  * @static
  */
-export function isTypedArray(obj: any) {
-  return ArrayBuffer.isView(obj) && !(obj instanceof DataView);
+export function isTypedArray(value: any) {
+  return ArrayBuffer.isView(value) && !(value instanceof DataView);
 }
 
 /**
  * 验证是不是一个日期对象
  * @method isDate
- * @param {Object} val   要检查的对象
+ * @param {Object} value   要检查的对象
  * @return {Boolean}           结果
  * @static
  */
-export function isDate(val: any) {
-  if (isNull(val)) return false;
-  return val instanceof Date;
+export function isDate(value: any): value is Date {
+  if (isNull(value)) return false;
+  return value instanceof Date;
 }
 
-export function isRegExp(val: any) {
-  return val instanceof RegExp;
+export function isRegExp(value: any): value is RegExp {
+  return value instanceof RegExp;
 }
 
 export function toArray<T = any>(array: any): T[] {
@@ -187,13 +188,13 @@ export function toArray<T = any>(array: any): T[] {
   return Array.prototype.slice.call(array);
 }
 
-export function toDate(val: any): Date {
-  if (isNumber(val)) {
-    return new Date(val);
-  } else if (isDate(val)) {
-    return val;
-  } else if (isString(val)) {
-    return new Date(replace(replace(val, "-", "/"), "T", " "));
+export function toDate(value: any): Date {
+  if (isNumber(value)) {
+    return new Date(value);
+  } else if (isDate(value)) {
+    return value;
+  } else if (isString(value)) {
+    return new Date(replace(replace(value, "-", "/"), "T", " "));
   } else {
     return null;
   }
@@ -264,10 +265,10 @@ export function each(
   }
 }
 
-export function copy(src: any, dst?: any, igonres?: string[]) {
+export function copy(src: any, dst?: any, ignores?: string[]) {
   dst = dst || (isArray(src) ? [] : {});
   Object.keys(src).forEach((key: string) => {
-    if (igonres && igonres.indexOf(key) > -1) return;
+    if (ignores && ignores.indexOf(key) > -1) return;
     delete dst[key];
     if (Object.getOwnPropertyDescriptor) {
       try {
@@ -286,7 +287,7 @@ export function copy(src: any, dst?: any, igonres?: string[]) {
   return dst;
 }
 
-export function clone(src: any, igonres?: string[]) {
+export function clone(src: any, ignores?: string[]) {
   if (
     isNull(src) ||
     isString(src) ||
@@ -307,16 +308,16 @@ export function clone(src: any, igonres?: string[]) {
   }
   Object.keys(src).forEach(key => {
     const value = src[key];
-    if (objClone[key] !== value && !igonres.includes(key)) {
+    if (objClone[key] !== value && !ignores.includes(key)) {
       if (isObject(value)) {
-        objClone[key] = clone(value, igonres);
+        objClone[key] = clone(value, ignores);
       } else {
         objClone[key] = value;
       }
     }
   });
   ["toString", "valueOf"].forEach(key => {
-    if (igonres.includes(key)) return;
+    if (ignores.includes(key)) return;
     final(objClone, key, src[key]);
   });
   return objClone;
@@ -328,28 +329,28 @@ export function clone(src: any, igonres?: string[]) {
  * @return 合并后的对象
  * @param {Object} dst 目标对象
  * @param {Object} src 源对象
- * @param {Array} igonres 忽略的属性名,
+ * @param {Array} ignores 忽略的属性名,
  * @param {Number} mode 模式
  */
 export function mix(
   dst: any,
   src: any,
-  igonres?: string[],
+  ignores?: string[],
   mode?: 0 | 1 | 2 | 3 | 4,
-  igonreNull?: boolean
+  ignoreNull?: boolean
 ): any {
   // 根据模式来判断，默认是Obj to Obj的
   if (mode) {
     switch (mode) {
       case 1: // proto to proto
-        return mix(dst.prototype, src.prototype, igonres, 0);
+        return mix(dst.prototype, src.prototype, ignores, 0);
       case 2: // object to object and proto to proto
-        mix(dst.prototype, src.prototype, igonres, 0);
+        mix(dst.prototype, src.prototype, ignores, 0);
         break; // pass through
       case 3: // proto to static
-        return mix(dst, src.prototype, igonres, 0);
+        return mix(dst, src.prototype, ignores, 0);
       case 4: // static to proto
-        return mix(dst.prototype, src, igonres, 0);
+        return mix(dst.prototype, src, ignores, 0);
       default: // object to object is what happens below
     }
   }
@@ -357,15 +358,15 @@ export function mix(
   src = src || {};
   dst = dst || (isArray(src) ? [] : {});
   Object.keys(src).forEach(key => {
-    if (igonres.includes(key)) return;
-    if (igonreNull && isNull(src[key])) return;
+    if (ignores.includes(key)) return;
+    if (ignoreNull && isNull(src[key])) return;
     if (
       isObject(src[key]) &&
       (src[key].constructor === Object ||
         src[key].constructor === Array ||
         src[key].constructor === null)
     ) {
-      dst[key] = mix(dst[key], src[key], igonres, 0, igonreNull);
+      dst[key] = mix(dst[key], src[key], ignores, 0, ignoreNull);
     } else {
       dst[key] = src[key];
     }
@@ -405,7 +406,7 @@ export function deepEqual(a: any, b: any): boolean {
   const bKeys = Object.keys(b);
   if (aKeys.length !== bKeys.length) return false;
   const allKeys = aKeys.concat(bKeys);
-  return !allKeys.some(key => !deepEqual(a[key], b[key]));
+  return !allKeys.some(key => !deepEqual((a as any)[key], (b as any)[key]));
 }
 
 export function fromTo(
@@ -447,12 +448,12 @@ export function setByPath(obj: any, path: string | string[], value: any) {
     return;
   }
   if (!isArray(path)) {
-    path = (path as string)
+    path = path
       .replace(/\[/, ".")
       .replace(/\]/, ".")
       .split(".");
   }
-  (path as string[]).forEach((name, index) => {
+  path.forEach((name, index) => {
     if (isNull(name) || name.length < 1) return;
     if (index === path.length - 1) {
       obj[name] = value;
@@ -466,16 +467,16 @@ export function setByPath(obj: any, path: string | string[], value: any) {
 export function getByPath(
   obj: any,
   path: string | string[],
-  filter?: (valeu?: any, key?: string, obj?: any) => boolean
+  filter?: (value?: any, key?: string, obj?: any) => boolean
 ) {
   if (isNull(obj) || isNull(path) || path === "") return obj;
   if (!isArray(path)) {
-    path = (path as string)
+    path = path
       .replace(/\[/, ".")
       .replace(/\]/, ".")
       .split(".");
   }
-  (path as string[]).forEach(name => {
+  path.forEach(name => {
     if (isNull(obj) || isNull(name) || name.length < 1) return;
     obj = filter ? filter(obj[name], name, obj) : obj[name];
   });
@@ -555,16 +556,16 @@ export function toSplitCase(str: string) {
   return str.toLowerCase();
 }
 
-export function htmlPrefilter(html: string) {
+export function filterHTML(html: string) {
   if (!html) return "";
-  const rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
-  return html.replace(rxhtmlTag, "<$1></$2>");
+  const tagRegExp = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([a-z][^\/\0>\x20\t\r\n\f]*)[^>]*)\/>/gi;
+  return html.replace(tagRegExp, "<$1></$2>");
 }
 
 export function parseHTML(str: string) {
   str = str || " ";
   const parent = document.createElement("div");
-  parent.innerHTML = htmlPrefilter(str);
+  parent.innerHTML = filterHTML(str);
   const childNodes = toArray<ChildNode>(parent.childNodes);
   // 先 clone 一份再通过 innerHTML 清空
   // 否则 IE9 下，清空时会导不通过返回的 DOM 没有子结点
