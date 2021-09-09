@@ -323,6 +323,18 @@ export function clone(src: any, ignores?: string[]) {
   return objClone;
 }
 
+export function getPrototypeOf(obj: any) {
+  return Object.getPrototypeOf(obj);
+}
+
+export function setPrototypeOf(obj: any, proto: any) {
+  return Object.setPrototypeOf(obj, proto);
+}
+
+export function create(proto: any) {
+  return Object.create(proto);
+}
+
 /**
  * 合并对象
  * @method mix
@@ -339,6 +351,7 @@ export function mix(
   mode?: 0 | 1 | 2 | 3 | 4,
   ignoreNull?: boolean
 ): any {
+  ignores = ignores || [];
   // 根据模式来判断，默认是Obj to Obj的
   if (mode) {
     switch (mode) {
