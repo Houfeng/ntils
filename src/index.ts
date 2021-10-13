@@ -306,6 +306,7 @@ export function clone(src: any, ignores?: string[]) {
   } catch {
     objClone = {};
   }
+  ignores = ignores || [];
   Object.keys(src).forEach(key => {
     const value = src[key];
     if (objClone[key] !== value && !ignores.includes(key)) {
