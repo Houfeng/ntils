@@ -208,32 +208,35 @@ export function replace(str: string, from: string, to: string) {
 export function formatDate(
   value: Date | number | string,
   format: string,
-  dict?: any
+  options?: {
+    utc?: boolean;
+    translate?: Record<string, string>;
+  }
 ): string {
   if (isNull(format) || isNull(value)) return String(value);
-  const date = toDate(value);
-  dict = dict || {};
+  const { utc = false, translate = {} } = { ...options };
+  const dt = toDate(value);
   const placeholder: any = {
-    "M+": date.getMonth() + 1, // month
-    "d+": date.getDate(), // day
-    "h+": date.getHours(), // hour
-    "m+": date.getMinutes(), // minute
-    "s+": date.getSeconds(), // second
-    "w+": date.getDay(), // week
-    "q+": Math.floor((date.getMonth() + 3) / 3), // quarter
+    "M+": (utc ? dt.getUTCMonth() : dt.getMonth()) + 1, // month
+    "d+": utc ? dt.getUTCDate() : dt.getDate(), // day
+    "h+": utc ? dt.getUTCHours() : dt.getHours(), // hour
+    "m+": utc ? dt.getUTCMinutes() : dt.getMinutes(), // minute
+    "s+": utc ? dt.getUTCSeconds() : dt.getSeconds(), // second
+    "w+": utc ? dt.getUTCDay() : dt.getDay(), // week
+    "q+": Math.floor(((utc ? dt.getUTCMonth() : dt.getMonth()) + 3) / 3), // quarter
     // tslint:disable-next-line
-    "S": date.getMilliseconds() // millisecond
+    "S": utc ? dt.getUTCMilliseconds() : dt.getMilliseconds() // millisecond
   };
   if (/(y+)/.test(format)) {
     format = format.replace(
       RegExp.$1,
-      (date.getFullYear() + "").substr(4 - RegExp.$1.length)
+      (dt.getFullYear() + "").substr(4 - RegExp.$1.length)
     );
   }
   for (let key in placeholder) {
     if (new RegExp("(" + key + ")").test(format)) {
       let value = placeholder[key];
-      value = dict[value] || value;
+      value = translate[value] || value;
       format = format.replace(
         RegExp.$1,
         RegExp.$1.length === 1
